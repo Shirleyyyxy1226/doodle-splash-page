@@ -12,7 +12,7 @@ const floatAnimation = {
 
 export const Hero = () => {
   return (
-    <section className="relative overflow-hidden bg-cream pt-20" style={{ backgroundImage: `url(${heroBg})`, backgroundSize: '120%', backgroundPosition: 'center top', backgroundRepeat: 'no-repeat' }}>
+    <section className="relative overflow-hidden bg-cream pt-20" style={{ backgroundImage: `url(${heroBg})`, backgroundSize: '110%', backgroundPosition: 'center top', backgroundRepeat: 'no-repeat' }}>
       {/* Floating animated icons */}
       <motion.div animate={{ y: [0, -15, 0], rotate: [0, 10, 0] }} transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }} className="absolute top-28 left-[8%] z-10">
         <div className="rounded-full bg-coral-light/60 p-3 shadow-soft backdrop-blur-sm"><Plane className="h-5 w-5 text-coral" /></div>
