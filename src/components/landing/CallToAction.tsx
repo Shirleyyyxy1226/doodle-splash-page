@@ -33,8 +33,6 @@ export const CallToAction = () => {
           transition={{ duration: 0.8 }}
           className="mx-auto max-w-3xl text-center"
         >
-          <span className="mb-6 inline-block text-5xl">🌈</span>
-
           <h2 className="mb-6 font-display text-4xl font-bold text-card md:text-5xl lg:text-6xl">
             Ready to Travel{" "}
             <span className="relative">
@@ -46,7 +44,9 @@ export const CallToAction = () => {
           </h2>
 
           <p className="mb-10 font-body text-lg text-card/90 md:text-xl">
-            Tell us about your kid. We'll handle the rest. Join families who finally{" "}
+            Tell us about your kid. We'll handle the rest.
+            <br />
+            Join families who finally{" "}
             <span className="font-semibold">enjoy</span> traveling with little ones. ✨
           </p>
 
@@ -58,8 +58,6 @@ export const CallToAction = () => {
               </Button>
             </a>
           </div>
-
-          <p className="mt-4 font-body text-sm text-card/70">No signup required · 100% free to start</p>
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}

@@ -155,7 +155,7 @@ export const Explore = () => {
               <FilterChip key={f} label={f} active={placeFilter === f} onClick={() => setPlaceFilter(f)} />
             ))}
           </div>
-          <div className="grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-6">
+          <div className="grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-6 [&>*:nth-child(n+5)]:hidden md:[&>*:nth-child(n+5)]:!block">
             {places.map((place, i) => (
               <motion.div
                 key={place.id}
@@ -187,7 +187,7 @@ export const Explore = () => {
               <FilterChip key={f} label={f} active={eventFilter === f} onClick={() => setEventFilter(f)} />
             ))}
           </div>
-          <div className="grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-6">
+          <div className="grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-6 [&>*:nth-child(n+5)]:hidden md:[&>*:nth-child(n+5)]:!block">
             {events.map((event, i) => (
               <motion.div
                 key={event.id}

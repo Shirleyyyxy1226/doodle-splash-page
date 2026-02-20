@@ -14,7 +14,7 @@ export const Header = () => {
 
   return (
     <header className="fixed left-0 right-0 top-0 z-50 bg-cream/80 backdrop-blur-md">
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto max-w-4xl px-4">
         <div className="flex h-20 items-center justify-between">
           {/* Logo */}
           <motion.a
