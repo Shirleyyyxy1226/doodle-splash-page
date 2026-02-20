@@ -1,0 +1,199 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&family=Fredoka:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 45 100% 98%;
+    --foreground: 240 10% 15%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 15%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 15%;
+
+    --primary: 4 90% 65%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 45 100% 65%;
+    --secondary-foreground: 240 10% 15%;
+
+    --muted: 45 30% 94%;
+    --muted-foreground: 240 5% 45%;
+
+    --accent: 145 60% 50%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 45 30% 88%;
+    --input: 45 30% 88%;
+    --ring: 4 90% 65%;
+
+    --radius: 1rem;
+
+    /* Custom colors */
+    --coral: 4 90% 65%;
+    --coral-light: 4 90% 92%;
+    --sunny: 45 100% 65%;
+    --sunny-light: 45 100% 90%;
+    --mint: 145 60% 50%;
+    --mint-light: 145 60% 90%;
+    --sky: 195 85% 55%;
+    --sky-light: 195 85% 92%;
+    --lavender: 270 60% 70%;
+    --lavender-light: 270 60% 94%;
+    --cream: 45 100% 98%;
+
+    /* Gradients */
+    --gradient-hero: linear-gradient(135deg, hsl(4 90% 65% / 0.1), hsl(45 100% 65% / 0.1), hsl(145 60% 50% / 0.1));
+    --gradient-card: linear-gradient(180deg, hsl(0 0% 100%), hsl(45 30% 98%));
+
+    /* Shadows */
+    --shadow-soft: 0 4px 20px -4px hsl(240 10% 15% / 0.1);
+    --shadow-card: 0 8px 30px -8px hsl(240 10% 15% / 0.12);
+    --shadow-lifted: 0 20px 40px -12px hsl(240 10% 15% / 0.15);
+
+    /* Typography */
+    --font-display: 'Fredoka', sans-serif;
+    --font-body: 'Nunito', sans-serif;
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    --background: 240 10% 10%;
+    --foreground: 45 30% 95%;
+    --card: 240 10% 15%;
+    --card-foreground: 45 30% 95%;
+    --popover: 240 10% 15%;
+    --popover-foreground: 45 30% 95%;
+    --primary: 4 90% 65%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 45 100% 65%;
+    --secondary-foreground: 240 10% 15%;
+    --muted: 240 10% 20%;
+    --muted-foreground: 45 20% 65%;
+    --accent: 145 60% 50%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 240 10% 25%;
+    --input: 240 10% 25%;
+    --ring: 4 90% 65%;
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-body antialiased;
+    font-family: var(--font-body);
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+  }
+}
+
+@layer components {
+  .hand-drawn-border {
+    border-radius: 60% 40% 50% 50% / 50% 50% 40% 60%;
+  }
+
+  .hand-drawn-border-alt {
+    border-radius: 40% 60% 55% 45% / 55% 45% 55% 45%;
+  }
+
+  .blob-shape {
+    border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+  }
+
+  .blob-shape-alt {
+    border-radius: 70% 30% 30% 70% / 60% 40% 60% 40%;
+  }
+
+  .wavy-underline {
+    text-decoration: underline;
+    text-decoration-style: wavy;
+    text-underline-offset: 4px;
+  }
+
+  .doodle-circle {
+    position: relative;
+  }
+
+  .doodle-circle::after {
+    content: '';
+    position: absolute;
+    inset: -8px;
+    border: 3px solid currentColor;
+    border-radius: 50% 45% 55% 50% / 45% 55% 50% 50%;
+    opacity: 0.3;
+  }
+}
+
+@layer utilities {
+  .text-gradient-coral {
+    background: linear-gradient(135deg, hsl(var(--coral)), hsl(var(--sunny)));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .text-gradient-sky {
+    background: linear-gradient(135deg, hsl(var(--sky)), hsl(var(--mint)));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .bg-coral { background-color: hsl(var(--coral)); }
+  .bg-coral-light { background-color: hsl(var(--coral-light)); }
+  .bg-sunny { background-color: hsl(var(--sunny)); }
+  .bg-sunny-light { background-color: hsl(var(--sunny-light)); }
+  .bg-mint { background-color: hsl(var(--mint)); }
+  .bg-mint-light { background-color: hsl(var(--mint-light)); }
+  .bg-sky { background-color: hsl(var(--sky)); }
+  .bg-sky-light { background-color: hsl(var(--sky-light)); }
+  .bg-lavender { background-color: hsl(var(--lavender)); }
+  .bg-lavender-light { background-color: hsl(var(--lavender-light)); }
+  .bg-cream { background-color: hsl(var(--cream)); }
+
+  .text-coral { color: hsl(var(--coral)); }
+  .text-sunny { color: hsl(var(--sunny)); }
+  .text-mint { color: hsl(var(--mint)); }
+  .text-sky { color: hsl(var(--sky)); }
+  .text-lavender { color: hsl(var(--lavender)); }
+
+  .border-coral { border-color: hsl(var(--coral)); }
+  .border-sunny { border-color: hsl(var(--sunny)); }
+  .border-mint { border-color: hsl(var(--mint)); }
+  .border-sky { border-color: hsl(var(--sky)); }
+
+  .shadow-soft { box-shadow: var(--shadow-soft); }
+  .shadow-card { box-shadow: var(--shadow-card); }
+  .shadow-lifted { box-shadow: var(--shadow-lifted); }
+}
