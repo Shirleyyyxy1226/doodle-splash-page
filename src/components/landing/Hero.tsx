@@ -140,25 +140,8 @@ export const Hero = () => {
                 alt="Family enjoying a kid-friendly trip"
                 className="h-[200px] w-full object-cover"
               />
-              {/* Overlay card */}
-              <div className="bg-card p-4">
-                <div className="flex items-center gap-3 mb-2">
-                  <div className="h-8 w-8 rounded-full bg-coral-light flex items-center justify-center">
-                    <Baby className="h-4 w-4 text-coral" />
-                  </div>
-                  <div>
-                    <p className="font-display text-sm font-bold text-foreground">Milo's Trip</p>
-                    <p className="text-xs text-muted-foreground">Paced for a 3-year-old</p>
-                  </div>
-                </div>
-                <div className="flex gap-1.5">
-                  {["✓ Nap windows", "✓ Kid-friendly food", "✓ Rest breaks"].map((tag) => (
-                    <span key={tag} className="rounded-full bg-mint-light px-2 py-0.5 text-[10px] font-semibold text-mint">
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              </div>
+              {/* Clean bottom edge */}
+              <div className="h-4 bg-gradient-to-t from-card/20 to-transparent" />
             </div>
           </motion.div>
         </motion.div>
