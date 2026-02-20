@@ -127,7 +127,7 @@ export const Hero = () => {
         </div>
 
         {/* Spacer to maintain layout */}
-        <div className="mt-4 h-[240px]" />
+        <div className="mt-4 h-[300px]" />
       </div>
 
       {/* Wave divider */}
