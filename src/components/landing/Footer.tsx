@@ -1,4 +1,5 @@
-import { Heart, Mail } from "lucide-react";
+import { Heart } from "lucide-react";
+import kiddogoLogo from "@/assets/kiddogo-logo.svg";
 
 export const Footer = () => {
   return (
@@ -7,7 +8,7 @@ export const Footer = () => {
         <div className="flex flex-col items-center justify-between gap-8 md:flex-row">
           {/* Logo */}
           <div className="flex items-center gap-2">
-            <span className="text-2xl">🦒</span>
+            <img src={kiddogoLogo} alt="Kiddogo" className="h-8 w-8" />
             <span className="font-display text-xl font-bold text-card">Kiddogo</span>
           </div>
 
@@ -23,12 +24,6 @@ export const Footer = () => {
               </a>
             ))}
           </nav>
-
-          {/* Newsletter hint */}
-          <div className="flex items-center gap-2 rounded-full bg-card/10 px-4 py-2">
-            <Mail className="h-4 w-4 text-coral" />
-            <span className="font-body text-sm text-muted-foreground">Join the waitlist</span>
-          </div>
         </div>
 
         <div className="my-8 h-px bg-card/10" />

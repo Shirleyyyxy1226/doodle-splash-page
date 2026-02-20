@@ -12,7 +12,7 @@ const floatAnimation = {
 
 export const Hero = () => {
   return (
-    <section className="relative overflow-hidden bg-cream pt-20" style={{ backgroundImage: `url(${heroBg})`, backgroundSize: '110%', backgroundPosition: 'center 40%', backgroundRepeat: 'no-repeat' }}>
+    <section className="relative overflow-hidden bg-cream pt-20" style={{ backgroundImage: `url(${heroBg})`, backgroundSize: '1728px 1022px', backgroundPosition: 'center calc(40% - 70px)', backgroundRepeat: 'no-repeat' }}>
       {/* Floating animated icons */}
       <motion.div animate={{ y: [0, -15, 0], rotate: [0, 10, 0] }} transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }} className="absolute top-28 left-[8%] z-10">
         <div className="rounded-full bg-coral-light/60 p-3 shadow-soft backdrop-blur-sm"><Plane className="h-5 w-5 text-coral" /></div>
@@ -111,9 +111,9 @@ export const Hero = () => {
             className="mt-6 flex flex-wrap items-center justify-center gap-2"
           >
             {[
-              { icon: Baby, label: "All ages welcome" },
-              { icon: Shield, label: "Allergy-aware" },
+              { icon: Baby, label: "Child profiles" },
               { icon: Heart, label: "Nap-synced plans" },
+              { icon: Star, label: "Live trip guide" },
             ].map((item, i) => {
               const Icon = item.icon;
               return (
@@ -131,7 +131,7 @@ export const Hero = () => {
       </div>
 
       {/* Wave divider */}
-      <div className="absolute bottom-0 left-0 right-0">
+      <div className="absolute bottom-0 left-0 right-0 translate-y-[50px]">
         <svg viewBox="0 0 1440 120" className="w-full fill-card">
           <path d="M0,64L48,69.3C96,75,192,85,288,80C384,75,480,53,576,48C672,43,768,53,864,64C960,75,1056,85,1152,80C1248,75,1344,53,1392,42.7L1440,32L1440,120L1392,120C1344,120,1248,120,1152,120C1056,120,960,120,864,120C768,120,672,120,576,120C480,120,384,120,288,120C192,120,96,120,48,120L0,120Z" />
         </svg>
