@@ -126,25 +126,8 @@ export const Hero = () => {
           </motion.div>
         </div>
 
-        {/* Hero image - phone mockup feel */}
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.6, duration: 0.8 }}
-          className="relative mx-auto mt-8 max-w-[260px]"
-        >
-          <motion.div animate={floatAnimation}>
-            <div className="overflow-hidden rounded-2xl border-4 border-foreground/10 shadow-lifted">
-              <img
-                src={heroImage}
-                alt="Family enjoying a kid-friendly trip"
-                className="h-[200px] w-full object-cover"
-              />
-              {/* Clean bottom edge */}
-              <div className="h-4 bg-gradient-to-t from-card/20 to-transparent" />
-            </div>
-          </motion.div>
-        </motion.div>
+        {/* Spacer to maintain layout */}
+        <div className="mt-8 h-[240px]" />
       </div>
 
       {/* Wave divider */}
