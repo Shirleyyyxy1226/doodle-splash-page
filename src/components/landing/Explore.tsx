@@ -12,6 +12,8 @@ import paintingWorkshop from "@/assets/painting-workshop.jpg";
 import familyConcert from "@/assets/family-concert.jpg";
 import puppetShow from "@/assets/puppet-show.jpg";
 import cookingClass from "@/assets/cooking-class.jpg";
+import storytellingFestival from "@/assets/storytelling-festival.jpg";
+import treasureHunt from "@/assets/treasure-hunt.jpg";
 
 interface Place {
   id: string;
@@ -45,8 +47,8 @@ const events: Event[] = [
   { id: "e2", title: "Family Concert", location: "London, UK", date: "Mar 22", image: familyConcert, ageRange: "All" },
   { id: "e3", title: "Puppet Festival", location: "Prague", date: "Apr 5", image: puppetShow, ageRange: "2-8" },
   { id: "e4", title: "Kids Cooking Class", location: "Florence, Italy", date: "Apr 12", image: cookingClass, ageRange: "5-12" },
-  { id: "e5", title: "Safari Adventure", location: "Kenya", date: "Apr 20", image: safariAdventure, ageRange: "3+" },
-  { id: "e6", title: "Forest Explorer", location: "Canada", date: "May 1", image: forestCamping, ageRange: "6+" },
+  { id: "e5", title: "Storytelling Festival", location: "Copenhagen", date: "Apr 20", image: storytellingFestival, ageRange: "3-9" },
+  { id: "e6", title: "Garden Treasure Hunt", location: "Edinburgh, UK", date: "May 1", image: treasureHunt, ageRange: "4-10" },
 ];
 
 const PlaceCard = ({ place }: { place: Place }) => (
@@ -146,7 +148,7 @@ export const Explore = () => {
               <Sparkles size={20} className="text-secondary" />
               Popular Places
             </h2>
-            <button className="text-sm text-primary font-display font-semibold hover:underline">View all</button>
+            
           </div>
           <div className="flex gap-2 mb-5">
             {["Most Viewed", "Nearby", "Kid-Friendly"].map((f) => (
@@ -179,7 +181,6 @@ export const Explore = () => {
             <h2 className="font-display text-2xl font-bold text-foreground md:text-3xl">
               Popular Events
             </h2>
-            <button className="text-sm text-primary font-display font-semibold hover:underline">View all</button>
           </div>
           <div className="flex gap-2 mb-5">
             {["Latest", "Nearby", "This Weekend"].map((f) => (
