@@ -227,7 +227,7 @@ export const JourneyShowcase = () => {
             <span className="text-lg">✨</span>
             <span className="font-body font-semibold text-card">How Kiddogo Works</span>
           </div>
-          <h2 className="mb-4 font-display text-4xl font-bold leading-tight text-card md:text-5xl">
+          <h2 className="mb-4 font-handwriting text-4xl leading-tight text-card md:text-5xl">
             Your Journey,{" "}
             <span className="relative">
               Designed for Kids
