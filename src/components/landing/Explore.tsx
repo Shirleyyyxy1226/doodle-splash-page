@@ -143,9 +143,9 @@ export const Explore = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="mb-12 text-center"
+          className="mx-auto mb-12 max-w-3xl rounded-3xl bg-gradient-to-br from-coral via-sunny to-mint px-6 py-12 text-center shadow-lifted md:px-12 md:py-16"
         >
-          <h2 className="font-display text-3xl font-bold text-foreground md:text-4xl">
+          <h2 className="font-display text-3xl font-bold text-card md:text-4xl">
             Not just kid-friendly places,
           </h2>
           <motion.p
@@ -153,16 +153,21 @@ export const Explore = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="mt-2 font-display text-3xl font-bold text-primary md:text-4xl"
+            className="mt-2 font-display text-3xl font-bold text-card md:text-4xl"
           >
-            but kid-friendly timing.
+            <span className="relative">
+              but kid-friendly timing.
+              <svg className="absolute -bottom-2 left-0 w-full" viewBox="0 0 200 12" fill="none">
+                <path d="M2 8C50 2 100 2 198 8" stroke="currentColor" strokeWidth="3" strokeLinecap="round" className="text-card/50" />
+              </svg>
+            </span>
           </motion.p>
           <motion.p
             initial={{ opacity: 0, y: 15 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.4 }}
-            className="mx-auto mt-4 max-w-lg text-muted-foreground"
+            className="mx-auto mt-4 max-w-lg text-card/90"
           >
             Explore places filtered by age, walking ease, and parent ratings.
           </motion.p>
