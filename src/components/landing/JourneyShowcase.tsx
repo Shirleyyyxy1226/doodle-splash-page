@@ -221,17 +221,22 @@ export const JourneyShowcase = () => {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mx-auto mb-16 max-w-2xl text-center"
+          className="mx-auto mb-16 max-w-3xl rounded-3xl bg-gradient-to-br from-coral via-sunny to-mint px-6 py-12 text-center shadow-lifted md:px-12 md:py-16"
         >
-          <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-sunny-light px-4 py-2">
+          <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-card/20 backdrop-blur-sm px-4 py-2">
             <span className="text-lg">✨</span>
-            <span className="font-body font-semibold text-foreground">How Kiddogo Works</span>
+            <span className="font-body font-semibold text-card">How Kiddogo Works</span>
           </div>
-          <h2 className="mb-4 font-display text-4xl font-bold leading-tight md:text-5xl">
+          <h2 className="mb-4 font-display text-4xl font-bold leading-tight text-card md:text-5xl">
             Your Journey,{" "}
-            <span className="text-gradient-coral">Designed for Kids</span>
+            <span className="relative">
+              Designed for Kids
+              <svg className="absolute -bottom-2 left-0 w-full" viewBox="0 0 200 12" fill="none">
+                <path d="M2 8C50 2 100 2 198 8" stroke="currentColor" strokeWidth="3" strokeLinecap="round" className="text-card/50" />
+              </svg>
+            </span>
           </h2>
-          <p className="font-body text-lg text-muted-foreground">
+          <p className="font-body text-lg text-card/90">
             Four steps from "we have a toddler" to "we had the best trip ever."
           </p>
         </motion.div>
