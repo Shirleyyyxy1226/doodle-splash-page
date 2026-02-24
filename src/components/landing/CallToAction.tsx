@@ -51,7 +51,7 @@ export const CallToAction = () => {
           </p>
 
           <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
-            <a href="https://kiddogo.co.uk/demo" target="_blank" rel="noopener noreferrer">
+            <a href="https://kiddogo.co.uk/" target="_blank" rel="noopener noreferrer">
               <Button size="lg" className="bg-card font-display text-lg text-foreground shadow-lifted hover:bg-card/90 px-8">
                 <Sparkles className="mr-2 h-5 w-5" />
                 Try Our App 🚀

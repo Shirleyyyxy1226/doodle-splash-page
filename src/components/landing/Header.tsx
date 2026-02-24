@@ -42,7 +42,7 @@ export const Header = () => {
 
           {/* CTA button */}
           <div className="hidden md:block">
-            <a href="https://kiddogo.co.uk/demo" target="_blank" rel="noopener noreferrer">
+            <a href="https://kiddogo.co.uk/" target="_blank" rel="noopener noreferrer">
               <Button className="bg-primary font-display hover:bg-coral/90">
                 Try Our App ✨
               </Button>
@@ -73,7 +73,7 @@ export const Header = () => {
                   {link.label}
                 </a>
               ))}
-              <a href="https://kiddogo.co.uk/demo" target="_blank" rel="noopener noreferrer">
+              <a href="https://kiddogo.co.uk/" target="_blank" rel="noopener noreferrer">
                 <Button className="mt-2 w-full bg-primary font-display hover:bg-coral/90">
                   Try Our App ✨
                 </Button>
