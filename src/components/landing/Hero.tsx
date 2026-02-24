@@ -24,19 +24,7 @@ export const Hero = () => {
         >
           Travel with Kids,
           <br />
-          <span className="relative inline-block text-gradient-coral">
-            Without the Mental Load.
-            <svg className="absolute -bottom-2 left-0 w-full" viewBox="0 0 300 12" fill="none" preserveAspectRatio="none">
-              <defs>
-                <linearGradient id="wave-grad" x1="0" y1="0" x2="1" y2="0">
-                  <stop offset="0%" stopColor="hsl(var(--coral))" stopOpacity="0.4" />
-                  <stop offset="50%" stopColor="hsl(var(--sunny))" stopOpacity="0.4" />
-                  <stop offset="100%" stopColor="hsl(var(--mint))" stopOpacity="0.4" />
-                </linearGradient>
-              </defs>
-              <path d="M2 8C40 3 80 10 120 5C160 0 200 9 250 4C270 3 290 7 298 6" stroke="url(#wave-grad)" strokeWidth="3" strokeLinecap="round" />
-            </svg>
-          </span>
+          <span className="text-gradient-coral">Without the Mental Load.</span>
         </motion.h1>
 
         {/* CTA buttons */}
