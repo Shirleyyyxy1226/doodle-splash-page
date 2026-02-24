@@ -2,28 +2,28 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Sparkles, ArrowDown, Baby, Heart, Star } from "lucide-react";
 import heroBg from "@/assets/hero-bg.svg";
-import beachImg from "@/assets/beach-paradise.jpg";
-import cookingImg from "@/assets/cooking-class.jpg";
-import safariImg from "@/assets/safari-adventure.jpg";
+import childProfileImg from "@/assets/card-child-profile.jpg";
+import napScheduleImg from "@/assets/card-nap-schedule.png";
+import liveTripImg from "@/assets/card-live-trip.png";
 
 const features = [
   {
     icon: Baby,
     title: "Child profiles",
     description: "Age, naps, allergies, energy levels — every detail shapes the plan.",
-    image: beachImg,
+    image: childProfileImg,
   },
   {
     icon: Heart,
     title: "Nap-synced plans",
     description: "Activities paced around your child's rest windows and energy.",
-    image: cookingImg,
+    image: napScheduleImg,
   },
   {
     icon: Star,
     title: "Live trip guide",
     description: "Real-time map, timeline, and smart nudges while you travel.",
-    image: safariImg,
+    image: liveTripImg,
   },
 ];
 
