@@ -52,7 +52,7 @@ export const Hero = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.2 }}
-            className="mb-3 font-display text-2xl font-bold leading-[1.1] md:text-3xl lg:text-4xl"
+            className="mb-3 font-handwriting text-2xl leading-[1.1] md:text-3xl lg:text-4xl"
           >
             Tell Us About Your Kid.
             <br />
