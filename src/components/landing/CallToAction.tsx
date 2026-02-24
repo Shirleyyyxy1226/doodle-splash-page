@@ -33,7 +33,7 @@ export const CallToAction = () => {
           transition={{ duration: 0.8 }}
           className="mx-auto max-w-3xl text-center"
         >
-          <h2 className="mb-6 font-display text-4xl font-bold text-card md:text-5xl lg:text-6xl">
+          <h2 className="mb-6 font-handwriting text-4xl text-card md:text-5xl lg:text-6xl">
             Ready to Travel{" "}
             <span className="relative">
               with Confidence?

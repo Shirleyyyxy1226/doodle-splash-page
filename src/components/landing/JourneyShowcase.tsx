@@ -295,8 +295,8 @@ export const JourneyShowcase = () => {
           viewport={{ once: true }}
           className="mt-16 text-center"
         >
-          <p className="font-body text-muted-foreground">
-            That's it. <span className="font-semibold text-foreground">Tell us about your kid → We plan around them → Enjoy the trip</span>. 🌈
+          <p className="font-handwriting text-xl text-muted-foreground md:text-2xl">
+            That's it. <span className="text-foreground">Tell us about your kid → We plan around them → Enjoy the trip</span>. 🌈
           </p>
         </motion.div>
       </div>
