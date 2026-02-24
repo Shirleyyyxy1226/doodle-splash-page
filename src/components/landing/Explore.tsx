@@ -145,7 +145,7 @@ export const Explore = () => {
           transition={{ duration: 0.6 }}
           className="mx-auto mb-12 max-w-3xl rounded-3xl bg-gradient-to-br from-coral via-sunny to-mint px-6 py-12 text-center shadow-lifted md:px-12 md:py-16"
         >
-          <h2 className="font-display text-3xl font-bold text-card md:text-4xl">
+          <h2 className="font-handwriting text-3xl text-card md:text-4xl">
             Not just kid-friendly places,
           </h2>
           <motion.p
@@ -153,7 +153,7 @@ export const Explore = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="mt-2 font-display text-3xl font-bold text-card md:text-4xl"
+            className="mt-2 font-handwriting text-3xl text-card md:text-4xl"
           >
             <span className="relative">
               but kid-friendly timing.
