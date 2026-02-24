@@ -20,11 +20,16 @@ export const Hero = () => {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.2 }}
-          className="mb-8 font-handwriting text-4xl leading-[1.15] md:text-6xl lg:text-7xl text-foreground italic [transform:scaleY(0.6)]"
+          className="mb-8 font-handwriting text-4xl font-bold leading-[1.15] md:text-6xl lg:text-7xl text-foreground [transform:scaleY(0.6)]"
         >
           Travel with Kids,
           <br />
-          <span className="text-gradient-coral">Without the Mental Load.</span>
+          <span className="relative inline-block text-gradient-coral">
+            Without the Mental Load.
+            <svg className="absolute -bottom-2 left-0 w-full" viewBox="0 0 300 12" fill="none" preserveAspectRatio="none">
+              <path d="M2 8C40 3 80 10 120 5C160 0 200 9 250 4C270 3 290 7 298 6" stroke="hsl(var(--coral))" strokeWidth="3" strokeLinecap="round" />
+            </svg>
+          </span>
         </motion.h1>
 
         {/* CTA buttons */}
