@@ -86,7 +86,7 @@ export const Hero = () => {
             transition={{ delay: 0.5 }}
             className="flex flex-col items-center gap-3 sm:flex-row sm:justify-center"
           >
-            <a href="https://kiddogo.co.uk/demo" target="_blank" rel="noopener noreferrer">
+            <a href="https://kiddogo.co.uk/" target="_blank" rel="noopener noreferrer">
               <Button size="default" className="bg-primary font-display hover:bg-coral/90 px-6">
                 <Sparkles className="mr-2 h-5 w-5" />
                 Try Our App
