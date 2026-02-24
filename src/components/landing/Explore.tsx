@@ -137,6 +137,37 @@ export const Explore = () => {
   return (
     <section className="bg-card py-16 lg:py-24">
       <div className="container mx-auto px-4">
+        {/* Section Tagline */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="mb-12 text-center"
+        >
+          <h2 className="font-display text-3xl font-bold text-foreground md:text-4xl">
+            Not just kid-friendly places,
+          </h2>
+          <motion.p
+            initial={{ opacity: 0, y: 15 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="mt-2 font-display text-3xl font-bold text-primary md:text-4xl"
+          >
+            but kid-friendly timing.
+          </motion.p>
+          <motion.p
+            initial={{ opacity: 0, y: 15 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+            className="mx-auto mt-4 max-w-lg text-muted-foreground"
+          >
+            Explore places filtered by age, walking ease, and parent ratings.
+          </motion.p>
+        </motion.div>
+
         {/* Popular Places */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
