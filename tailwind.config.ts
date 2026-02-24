@@ -16,7 +16,7 @@ export default {
       fontFamily: {
         display: ['Fredoka', 'sans-serif'],
         body: ['Nunito', 'sans-serif'],
-        handwriting: ['Archivo Black', 'sans-serif'],
+        handwriting: ['Sedgwick Ave', 'cursive'],
       },
       colors: {
         border: "hsl(var(--border))",
