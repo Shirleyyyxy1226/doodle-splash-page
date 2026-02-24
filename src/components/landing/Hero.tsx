@@ -20,7 +20,7 @@ export const Hero = () => {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.2 }}
-          className="mb-8 font-handwriting text-4xl font-bold leading-[1.15] md:text-6xl lg:text-7xl text-foreground [transform:scaleY(0.6)]"
+          className="mb-8 font-handwriting text-3xl font-bold leading-[1.6] md:text-5xl lg:text-6xl text-foreground [transform:scaleY(0.6)]"
         >
           Travel with Kids,
           <br />
