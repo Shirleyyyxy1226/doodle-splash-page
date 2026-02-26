@@ -271,7 +271,7 @@ export const JourneyShowcase = () => {
         </motion.div>
 
         {/* Steps */}
-        <div className="mx-auto max-w-5xl space-y-20 lg:space-y-28">
+        <div className="mx-auto max-w-5xl space-y-20 lg:space-y-28 overflow-visible">
           {steps.map((step, i) => {
             const isEven = i % 2 === 0;
             return (
@@ -311,41 +311,41 @@ export const JourneyShowcase = () => {
                 </div>
 
                 {/* Mockup with floating text */}
-                <div className="w-full max-w-[280px] flex-shrink-0 relative">
+                <div className="w-full max-w-[280px] flex-shrink-0 relative overflow-visible">
                   {step.highlights && (
                     <>
                       <motion.span
                         initial={{ opacity: 0, x: -20 }}
-                        whileInView={{ opacity: 1, x: 0 }}
+                        whileInView={{ opacity: 0.35, x: 0 }}
                         viewport={{ once: true }}
-                        className="absolute -left-32 top-[12%] font-display text-2xl font-bold text-coral/20 whitespace-nowrap hidden lg:block"
+                        className="absolute -left-36 top-[10%] font-display text-3xl font-extrabold text-coral whitespace-nowrap hidden lg:block select-none pointer-events-none"
                       >
                         Age & Energy
                       </motion.span>
                       <motion.span
                         initial={{ opacity: 0, x: -20 }}
-                        whileInView={{ opacity: 1, x: 0 }}
+                        whileInView={{ opacity: 0.3, x: 0 }}
                         viewport={{ once: true }}
                         transition={{ delay: 0.15 }}
-                        className="absolute -left-24 top-[55%] font-display text-xl font-bold text-sunny/30 whitespace-nowrap hidden lg:block"
+                        className="absolute -left-28 top-[55%] font-display text-2xl font-extrabold text-sunny whitespace-nowrap hidden lg:block select-none pointer-events-none"
                       >
                         Allergies
                       </motion.span>
                       <motion.span
                         initial={{ opacity: 0, x: 20 }}
-                        whileInView={{ opacity: 1, x: 0 }}
+                        whileInView={{ opacity: 0.3, x: 0 }}
                         viewport={{ once: true }}
                         transition={{ delay: 0.1 }}
-                        className="absolute -right-32 top-[28%] font-display text-xl font-bold text-sky/25 whitespace-nowrap hidden lg:block"
+                        className="absolute -right-36 top-[25%] font-display text-2xl font-extrabold text-sky whitespace-nowrap hidden lg:block select-none pointer-events-none"
                       >
                         Nap Windows
                       </motion.span>
                       <motion.span
                         initial={{ opacity: 0, x: 20 }}
-                        whileInView={{ opacity: 1, x: 0 }}
+                        whileInView={{ opacity: 0.35, x: 0 }}
                         viewport={{ once: true }}
                         transition={{ delay: 0.2 }}
-                        className="absolute -right-24 top-[72%] font-display text-2xl font-bold text-mint/25 whitespace-nowrap hidden lg:block"
+                        className="absolute -right-28 top-[72%] font-display text-3xl font-extrabold text-mint whitespace-nowrap hidden lg:block select-none pointer-events-none"
                       >
                         Interests
                       </motion.span>
