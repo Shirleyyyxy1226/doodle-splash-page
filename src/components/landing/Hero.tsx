@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Sparkles, ArrowDown } from "lucide-react";
 import heroBg from "@/assets/hero-bg.svg";
 import heroBgV2 from "@/assets/hero-bg-v2.svg";
+import heroBgV3 from "@/assets/hero-bg-v3.png";
 
 const HeroContent = () => (
   <>
@@ -64,51 +65,35 @@ const HeroContent = () => (
   </>
 );
 
+const HeroSection = ({ label, bgImage, bgStyle }: { label: string; bgImage: string; bgStyle?: React.CSSProperties }) => (
+  <section
+    className="relative overflow-hidden bg-cream min-h-screen flex flex-col"
+    style={{
+      backgroundImage: `url(${bgImage})`,
+      backgroundSize: 'cover',
+      backgroundPosition: 'center 40%',
+      backgroundRepeat: 'no-repeat',
+      ...bgStyle,
+    }}
+  >
+    <div className="absolute top-24 left-6 z-20 rounded-full bg-foreground/70 px-4 py-1.5 text-sm font-bold text-primary-foreground">
+      {label}
+    </div>
+    <HeroContent />
+    <div className="absolute bottom-0 left-0 right-0 translate-y-[50px]">
+      <svg viewBox="0 0 1440 120" className="w-full fill-card">
+        <path d="M0,64L48,69.3C96,75,192,85,288,80C384,75,480,53,576,48C672,43,768,53,864,64C960,75,1056,85,1152,80C1248,75,1344,53,1392,42.7L1440,32L1440,120L1392,120C1344,120,1248,120,1152,120C1056,120,960,120,864,120C768,120,672,120,576,120C480,120,384,120,288,120C192,120,96,120,48,120L0,120Z" />
+      </svg>
+    </div>
+  </section>
+);
+
 export const Hero = () => {
   return (
     <>
-      {/* Version 1 */}
-      <section
-        className="relative overflow-hidden bg-cream min-h-screen flex flex-col"
-        style={{
-          backgroundImage: `url(${heroBg})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center 40%',
-          backgroundRepeat: 'no-repeat',
-        }}
-      >
-        <div className="absolute top-24 left-6 z-20 rounded-full bg-foreground/70 px-4 py-1.5 text-sm font-bold text-primary-foreground">
-          Version 1
-        </div>
-        <HeroContent />
-        <div className="absolute bottom-0 left-0 right-0 translate-y-[50px]">
-          <svg viewBox="0 0 1440 120" className="w-full fill-card">
-            <path d="M0,64L48,69.3C96,75,192,85,288,80C384,75,480,53,576,48C672,43,768,53,864,64C960,75,1056,85,1152,80C1248,75,1344,53,1392,42.7L1440,32L1440,120L1392,120C1344,120,1248,120,1152,120C1056,120,960,120,864,120C768,120,672,120,576,120C480,120,384,120,288,120C192,120,96,120,48,120L0,120Z" />
-          </svg>
-        </div>
-      </section>
-
-      {/* Version 2 */}
-      <section
-        className="relative overflow-hidden bg-cream min-h-screen flex flex-col"
-        style={{
-          backgroundImage: `url(${heroBgV2})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center 40%',
-          backgroundRepeat: 'no-repeat',
-          backgroundBlendMode: 'multiply',
-        }}
-      >
-        <div className="absolute top-6 left-6 z-20 rounded-full bg-foreground/70 px-4 py-1.5 text-sm font-bold text-primary-foreground">
-          Version 2
-        </div>
-        <HeroContent />
-        <div className="absolute bottom-0 left-0 right-0 translate-y-[50px]">
-          <svg viewBox="0 0 1440 120" className="w-full fill-card">
-            <path d="M0,64L48,69.3C96,75,192,85,288,80C384,75,480,53,576,48C672,43,768,53,864,64C960,75,1056,85,1152,80C1248,75,1344,53,1392,42.7L1440,32L1440,120L1392,120C1344,120,1248,120,1152,120C1056,120,960,120,864,120C768,120,672,120,576,120C480,120,384,120,288,120C192,120,96,120,48,120L0,120Z" />
-          </svg>
-        </div>
-      </section>
+      <HeroSection label="Version 1" bgImage={heroBg} />
+      <HeroSection label="Version 2" bgImage={heroBgV2} bgStyle={{ backgroundBlendMode: 'multiply' }} />
+      <HeroSection label="Version 3" bgImage={heroBgV3} />
     </>
   );
 };
