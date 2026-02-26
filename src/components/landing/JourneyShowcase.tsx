@@ -366,16 +366,8 @@ export const JourneyShowcase = () => {
         </div>
 
         {/* Connecting arrow */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          className="mt-16 text-center"
-        >
-          <p className="font-body text-xl text-muted-foreground md:text-2xl">
-            That's it. <span className="text-foreground">Share their rhythm → We plan around them → Enjoy the trip</span>. 🌈
-          </p>
-        </motion.div>
+
+
       </div>
     </section>
   );
