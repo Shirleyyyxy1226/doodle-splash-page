@@ -7,6 +7,7 @@ import kiddogoLogo from "@/assets/kiddogo-logo.svg";
 const navLinks = [
   { label: "How It Works", href: "#journey" },
   { label: "Features", href: "#features" },
+  { label: "Contact", href: "#contact" },
 ];
 
 export const Header = () => {
