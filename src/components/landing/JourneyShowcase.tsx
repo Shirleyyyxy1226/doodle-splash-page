@@ -322,7 +322,7 @@ export const JourneyShowcase = () => {
                         initial={{ opacity: 0, x: 20 }}
                         whileInView={{ opacity: 0.35, x: 0 }}
                         viewport={{ once: true }}
-                        className="absolute -left-48 top-[2%] lg:left-auto lg:right-[-28rem] font-display text-3xl font-extrabold text-coral whitespace-nowrap select-none pointer-events-none text-right"
+                        className="absolute -left-48 top-[2%] lg:left-auto lg:right-[-36rem] font-display text-3xl font-extrabold text-coral whitespace-nowrap select-none pointer-events-none text-right"
                       >
                         Age & Energy
                       </motion.span>
@@ -331,7 +331,7 @@ export const JourneyShowcase = () => {
                         whileInView={{ opacity: 0.3, x: 0 }}
                         viewport={{ once: true }}
                         transition={{ delay: 0.1 }}
-                        className="absolute -right-48 top-[28%] lg:right-[-28rem] font-display text-3xl font-extrabold text-sky whitespace-nowrap select-none pointer-events-none text-right"
+                        className="absolute -right-48 top-[28%] lg:right-[-36rem] font-display text-3xl font-extrabold text-sky whitespace-nowrap select-none pointer-events-none text-right"
                       >
                         Nap Windows
                       </motion.span>
@@ -340,7 +340,7 @@ export const JourneyShowcase = () => {
                         whileInView={{ opacity: 0.3, x: 0 }}
                         viewport={{ once: true }}
                         transition={{ delay: 0.15 }}
-                        className="absolute -left-48 top-[55%] lg:left-auto lg:right-[-28rem] font-display text-3xl font-extrabold text-sunny whitespace-nowrap select-none pointer-events-none text-right"
+                        className="absolute -left-48 top-[55%] lg:left-auto lg:right-[-36rem] font-display text-3xl font-extrabold text-sunny whitespace-nowrap select-none pointer-events-none text-right"
                       >
                         Allergies
                       </motion.span>
@@ -349,7 +349,7 @@ export const JourneyShowcase = () => {
                         whileInView={{ opacity: 0.35, x: 0 }}
                         viewport={{ once: true }}
                         transition={{ delay: 0.2 }}
-                        className="absolute -right-48 top-[78%] lg:right-[-28rem] font-display text-3xl font-extrabold text-mint whitespace-nowrap select-none pointer-events-none text-right"
+                        className="absolute -right-48 top-[78%] lg:right-[-36rem] font-display text-3xl font-extrabold text-mint whitespace-nowrap select-none pointer-events-none text-right"
                       >
                         Interests
                       </motion.span>
