@@ -66,7 +66,7 @@ const PlaceCard = ({ place }: { place: Place }) => (
       <Heart size={14} className="text-primary-foreground" />
     </button>
     <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-foreground/80 via-foreground/40 to-transparent p-3 pt-16">
-      <h3 className="text-sm font-display font-bold text-primary-foreground">{place.title}</h3>
+      <h3 className="text-sm font-body font-bold text-primary-foreground">{place.title}</h3>
       <div className="mt-1 flex items-center justify-between text-xs text-primary-foreground/80">
         <span className="flex items-center gap-1">
           <MapPin size={11} />
@@ -99,7 +99,7 @@ const EventCard = ({ event }: { event: Event }) => (
       <Heart size={14} className="text-primary-foreground" />
     </button>
     <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-foreground/80 via-foreground/40 to-transparent p-3 pt-16">
-      <h3 className="text-sm font-display font-bold text-primary-foreground">{event.title}</h3>
+      <h3 className="text-sm font-body font-bold text-primary-foreground">{event.title}</h3>
       <div className="mt-1 flex items-center justify-between text-xs text-primary-foreground/80">
         <span className="flex items-center gap-1">
           <MapPin size={11} />
