@@ -67,7 +67,7 @@ export const Contact = () => {
               </div>
               <div>
                 <label className="text-xs font-bold uppercase tracking-wider text-foreground mb-1.5 block">
-                  Company
+                  How old is your kid?
                 </label>
                 <Input value={form.phone} onChange={update("phone")} maxLength={100} className="bg-card border-border" />
               </div>
