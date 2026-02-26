@@ -52,7 +52,7 @@ export const VideoShowcase = () => {
       </section>
 
       {/* Feature cards section */}
-      <section className="bg-cream py-16 lg:py-24">
+      <section className="bg-cream py-8 lg:py-12">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
