@@ -54,6 +54,14 @@ export const VideoShowcase = () => {
       {/* Feature cards section */}
       <section className="bg-cream py-16 lg:py-24">
         <div className="container mx-auto px-4">
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="mb-12 text-center font-body text-2xl font-bold text-foreground md:text-3xl lg:text-4xl"
+          >
+            Everything Your Family Trip Needs
+          </motion.h2>
           <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
             {features.map((feature, i) => {
               const Icon = feature.icon;
