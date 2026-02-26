@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { Baby, Sun, Moon, Clock, Utensils, Zap, Cookie, BedDouble, Wind, MapPin, Star, Navigation, Footprints, Users, ChevronRight } from "lucide-react";
 
@@ -61,7 +62,19 @@ const RoutineMockup = () => (
 );
 
 // ── Step 2: Itinerary mockup (compact) ──
-const ItineraryMockup = () => (
+const ItineraryMockup = () => {
+  const [selected, setSelected] = useState<Set<string>>(new Set(["Make lighter", "Stay nearby"]));
+
+  const toggle = (label: string) => {
+    setSelected((prev) => {
+      const next = new Set(prev);
+      if (next.has(label)) next.delete(label);
+      else next.add(label);
+      return next;
+    });
+  };
+
+  return (
   <div className="rounded-2xl border border-border bg-card shadow-card overflow-hidden">
     <div className="p-3 pb-0">
       <p className="font-display text-xs font-bold text-foreground">Your Itinerary</p>
@@ -116,17 +129,21 @@ const ItineraryMockup = () => (
         </div>
       ))}
     </div>
-    {/* Quick adjustments - bigger */}
+    {/* Quick adjustments - interactive */}
     <div className="px-3 pb-3">
       <p className="text-[10px] font-bold text-foreground mb-2">Quick adjustments</p>
       <div className="grid grid-cols-2 gap-2">
         {[
-          { label: "Make lighter", icon: "✓", desc: "Remove low-priority activities", active: true },
-          { label: "Add more rest", icon: "🌙", desc: "Insert buffer time", active: false },
-          { label: "Less walking", icon: "👣", desc: "Keep activities closer", active: false },
-          { label: "Stay nearby", icon: "✓", desc: "Near accommodation", active: true },
+          { label: "Make lighter", desc: "Remove low-priority activities" },
+          { label: "Add more rest", desc: "Insert buffer time" },
+          { label: "Less walking", desc: "Keep activities closer" },
+          { label: "Stay nearby", desc: "Near accommodation" },
         ].map((adj) => (
-          <div key={adj.label} className={`rounded-xl border p-2.5 ${adj.active ? "border-coral bg-coral-light/40" : "border-border"}`}>
+          <div
+            key={adj.label}
+            onClick={() => toggle(adj.label)}
+            className={`rounded-xl border p-2.5 cursor-pointer transition-all duration-200 ${selected.has(adj.label) ? "border-coral bg-coral-light/40" : "border-border hover:border-muted-foreground/30"}`}
+          >
             <p className="text-[10px] font-bold text-foreground">{adj.label}</p>
             <p className="text-[7px] text-muted-foreground">{adj.desc}</p>
           </div>
@@ -134,7 +151,8 @@ const ItineraryMockup = () => (
       </div>
     </div>
   </div>
-);
+  );
+};
 
 // ── Step 3: Live map + plan mockup ──
 const LivePlanMockup = () => (
