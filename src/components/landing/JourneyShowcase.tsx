@@ -338,7 +338,7 @@ export const JourneyShowcase = () => {
                         whileInView={{ opacity: 0.3, x: 0 }}
                         viewport={{ once: true }}
                         transition={{ delay: 0.1 }}
-                        className="absolute -left-16 top-[25%] font-display text-2xl font-extrabold text-sky whitespace-nowrap hidden lg:block select-none pointer-events-none"
+                        className="absolute -left-4 top-[25%] font-display text-xl font-extrabold text-sky whitespace-nowrap hidden lg:block select-none pointer-events-none"
                       >
                         Nap Windows
                       </motion.span>
@@ -347,7 +347,7 @@ export const JourneyShowcase = () => {
                         whileInView={{ opacity: 0.35, x: 0 }}
                         viewport={{ once: true }}
                         transition={{ delay: 0.2 }}
-                        className="absolute -left-10 top-[75%] font-display text-3xl font-extrabold text-mint whitespace-nowrap hidden lg:block select-none pointer-events-none"
+                        className="absolute left-0 top-[75%] font-display text-xl font-extrabold text-mint whitespace-nowrap hidden lg:block select-none pointer-events-none"
                       >
                         Interests
                       </motion.span>
