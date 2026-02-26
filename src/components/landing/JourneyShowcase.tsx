@@ -279,6 +279,7 @@ export const JourneyShowcase = () => {
             const isEven = i % 2 === 0;
             return (
               <motion.div
+                id={`step-${step.step}`}
                 key={step.step}
                 initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}

@@ -10,18 +10,21 @@ const features = [
     title: "Child profiles",
     description: "Age, naps, allergies, energy levels — every detail shapes the plan.",
     image: childProfileImg,
+    stepId: "step-1",
   },
   {
     icon: Heart,
     title: "Nap-synced plans",
     description: "Activities paced around your child's rest windows and energy.",
     image: napScheduleImg,
+    stepId: "step-2",
   },
   {
     icon: Star,
     title: "Live trip guide",
     description: "Real-time map, timeline, and smart nudges while you travel.",
     image: liveTripImg,
+    stepId: "step-3",
   },
 ];
 
@@ -75,13 +78,14 @@ export const VideoShowcase = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.15 }}
-                  className="overflow-hidden rounded-2xl bg-card shadow-card"
+                  className="overflow-hidden rounded-2xl bg-card shadow-card cursor-pointer"
+                  onClick={() => document.getElementById(feature.stepId)?.scrollIntoView({ behavior: "smooth", block: "center" })}
                 >
                   <div className="aspect-[4/3] overflow-hidden">
                     <img
                       src={feature.image}
                       alt={feature.title}
-                      className="h-full w-full object-cover transition-transform duration-300 hover:scale-105"
+                      className="h-full w-full object-cover object-top transition-transform duration-300 hover:scale-105"
                     />
                   </div>
                   <div className="p-5">
