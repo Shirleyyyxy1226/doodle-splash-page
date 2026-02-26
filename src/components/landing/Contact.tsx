@@ -44,7 +44,7 @@ export const Contact = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
         >
-          <h2 className="font-display text-4xl font-bold text-foreground md:text-5xl mb-3">
+          <h2 className="font-body text-4xl font-bold text-foreground md:text-5xl mb-3">
             Contact Us
           </h2>
           <p className="font-body text-lg text-muted-foreground mb-10">
