@@ -1,113 +1,80 @@
 import { motion } from "framer-motion";
-import { Baby, Sun, MapPin, Moon, AlertTriangle, Star, Heart, UserCheck, Clock, Wind, Footprints, Navigation, ChevronDown } from "lucide-react";
+import { Baby, Sun, Moon, Clock, Utensils, Zap, Cookie, BedDouble, Wind, MapPin, Star, Navigation, Footprints, Users, ChevronRight } from "lucide-react";
 
-// ── Step 1: Profile mockup ──
-const ProfileMockup = () => (
+// ── Step 1: Daily Routine mockup (based on app screenshot) ──
+const RoutineMockup = () => (
   <div className="rounded-2xl border border-border bg-card shadow-card overflow-hidden">
-    <div className="bg-gradient-to-br from-coral-light via-sunny-light to-mint-light p-4">
-      <p className="font-display text-xs font-bold text-foreground">Family Profile</p>
-      <p className="text-[10px] text-muted-foreground">Manage travel preferences</p>
-    </div>
-    <div className="p-3 space-y-2">
-      <div className="flex items-center gap-2 rounded-xl bg-muted/50 p-2.5">
-        <div className="h-8 w-8 rounded-full bg-coral-light flex items-center justify-center shrink-0">
-          <Baby className="h-4 w-4 text-coral" />
+    <div className="bg-gradient-to-br from-coral-light via-sunny-light to-mint-light p-3">
+      <div className="flex items-center gap-2.5">
+        <div className="h-9 w-9 rounded-full bg-mint-light flex items-center justify-center">
+          <Baby className="h-4 w-4 text-mint" />
         </div>
-        <div className="flex-1 min-w-0">
-          <p className="font-display text-xs font-bold text-foreground">Milo's Profile</p>
-          <p className="text-[10px] text-muted-foreground">Used to shape your itinerary</p>
+        <div>
+          <p className="font-display text-xs font-bold text-foreground">Milo's Daily Routine</p>
+          <p className="text-[9px] text-muted-foreground">4 years old · A typical day</p>
         </div>
       </div>
-      <div className="grid grid-cols-2 gap-1.5">
-        {[
-          { icon: Sun, label: "Age", value: "3 years" },
-          { icon: MapPin, label: "Mobility", value: "walks but tires" },
-          { icon: Moon, label: "Naps", value: "occasional rest" },
-          { icon: AlertTriangle, label: "Allergies", value: "peanuts" },
-        ].map((item) => {
-          const Icon = item.icon;
-          return (
-            <div key={item.label} className="bg-muted/30 rounded-lg p-2">
-              <div className="flex items-center gap-1 text-muted-foreground mb-0.5">
-                <Icon className="h-2.5 w-2.5" />
-                <span className="text-[9px]">{item.label}</span>
+    </div>
+    <div className="p-3 space-y-0">
+      {[
+        { time: "7:00 AM", icon: Sun, label: "Start of day", title: "Wake up", color: "text-sunny", bg: "" },
+        { time: "8:00 AM", icon: Utensils, label: "Meal time", title: "Breakfast", color: "text-sunny", bg: "" },
+        { time: "9:00 AM", icon: Zap, label: "Most energetic 9–11 AM", title: "High energy window", color: "text-mint", bg: "bg-mint-light/40" },
+        { time: "10:00 AM", icon: Cookie, label: "Between meals", title: "Snack time", color: "text-coral", bg: "" },
+        { time: "12:00 PM", icon: Utensils, label: "Meal time", title: "Lunch", color: "text-sunny", bg: "" },
+        { time: "12:30 PM", icon: BedDouble, label: "12:30 – 2:00 PM", title: "Nap time", color: "text-sky", bg: "bg-sky-light/40" },
+        { time: "3:00 PM", icon: Cookie, label: "Between meals", title: "Snack time", color: "text-coral", bg: "" },
+        { time: "7:30 PM", icon: Moon, label: "Wind down", title: "Bedtime", color: "text-sky", bg: "" },
+      ].map((item) => {
+        const Icon = item.icon;
+        return (
+          <div key={item.time + item.title} className={`flex items-center gap-2.5 py-1.5 px-1 ${item.bg} rounded-md`}>
+            <span className="text-[8px] text-muted-foreground w-12 shrink-0 font-medium">{item.time}</span>
+            <div className={`h-2 w-2 rounded-full ${item.color.replace("text-", "bg-")} shrink-0`} />
+            <div className="flex-1 min-w-0">
+              <div className="flex items-center gap-1">
+                <Icon className={`h-2.5 w-2.5 ${item.color}`} />
+                <span className={`text-[8px] font-medium ${item.color}`}>{item.label}</span>
               </div>
-              <p className="text-[10px] font-semibold text-foreground">{item.value}</p>
+              <p className="text-[10px] font-bold text-foreground">{item.title}</p>
             </div>
-          );
-        })}
-      </div>
-      <div className="flex gap-1">
-        {["Animals", "Outdoor play", "Water"].map((interest) => (
-          <span key={interest} className="inline-flex items-center gap-0.5 rounded-full bg-muted/50 px-2 py-0.5 text-[9px] font-medium text-foreground">
-            <Heart className="h-2 w-2 text-coral" />
-            {interest}
-          </span>
-        ))}
-      </div>
+          </div>
+        );
+      })}
     </div>
-  </div>
-);
-
-// ── Step 2: Traveler selection mockup ──
-const TravelerMockup = () => (
-  <div className="rounded-2xl border border-border bg-card shadow-card overflow-hidden">
-    <div className="h-20 bg-gradient-to-br from-sky-light to-mint-light relative overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-t from-card/60 to-transparent" />
-      <div className="absolute bottom-2 left-3">
-        <p className="font-display text-xs font-bold text-foreground">Barcelona Beach</p>
-        <p className="text-[10px] text-muted-foreground">Jun 15–19 · 5 days</p>
-      </div>
-    </div>
-    <div className="p-3">
-      <p className="font-display text-[10px] font-bold text-foreground mb-2">Who's traveling?</p>
-      <div className="flex gap-2 mb-3">
+    <div className="mx-3 mb-3 rounded-xl bg-muted/40 p-2.5">
+      <p className="text-[9px] font-bold text-foreground mb-1">HOW THIS SHAPES YOUR TRIP</p>
+      <div className="space-y-0.5">
         {[
-          { name: "Shirley", role: "Parent", selected: true },
-          { name: "Milo", role: "Child · 3 yrs", selected: true, isChild: true },
-        ].map((t) => (
-          <div
-            key={t.name}
-            className={`flex-1 flex items-center gap-2 p-2 rounded-xl border transition-all ${
-              t.selected ? "border-primary bg-coral-light" : "border-border bg-card"
-            }`}
-          >
-            <div className={`h-7 w-7 rounded-full flex items-center justify-center shrink-0 ${
-              t.selected ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground"
-            }`}>
-              {t.isChild ? <Baby className="h-3 w-3" /> : <UserCheck className="h-3 w-3" />}
-            </div>
-            <div>
-              <p className="text-[10px] font-semibold text-foreground">{t.name}</p>
-              <p className="text-[8px] text-muted-foreground">{t.role}</p>
-            </div>
+          "Morning energy high — great for active plans",
+          "Afternoon nap usually around 12:30",
+          "Snacks needed every 2 hours",
+        ].map((tip) => (
+          <div key={tip} className="flex items-start gap-1">
+            <div className="h-1.5 w-1.5 rounded-full bg-coral mt-1 shrink-0" />
+            <p className="text-[8px] text-muted-foreground">{tip}</p>
           </div>
         ))}
       </div>
-      <div className="rounded-xl bg-gradient-to-r from-primary to-coral py-2 text-center">
-        <span className="font-display text-[10px] font-semibold text-primary-foreground">
-          Generate Itinerary for Milo →
-        </span>
-      </div>
     </div>
   </div>
 );
 
-// ── Step 3: Itinerary mockup ──
+// ── Step 2: Itinerary with kid-friendly ratings mockup ──
 const ItineraryMockup = () => (
   <div className="rounded-2xl border border-border bg-card shadow-card overflow-hidden">
-    <div className="p-3">
+    <div className="p-3 pb-0">
       <p className="font-display text-xs font-bold text-foreground">Your Itinerary</p>
-      <p className="text-[10px] text-muted-foreground mb-2">Barcelona Beach Family</p>
-      <div className="flex items-center gap-1 mb-3 rounded-full bg-mint-light px-2 py-1 w-fit">
-        <Star className="h-2.5 w-2.5 text-mint" />
-        <span className="text-[9px] font-semibold text-mint">✓ Paced around Milo's energy</span>
+      <p className="text-[10px] text-muted-foreground">Coastal Beach Town, Barcelona</p>
+      <div className="mt-1.5 inline-flex items-center gap-1 rounded-full bg-coral-light px-2 py-0.5">
+        <Baby className="h-2.5 w-2.5 text-coral" />
+        <span className="text-[8px] font-semibold text-coral">Designed for Milo, age 3</span>
       </div>
-      <div className="flex gap-1.5 mb-3">
+      <div className="flex gap-1.5 mt-2.5 mb-2">
         {[1, 2, 3].map((d) => (
           <div
             key={d}
-            className={`px-3 py-1.5 rounded-lg text-[10px] font-medium ${
+            className={`px-3 py-1 rounded-lg text-[10px] font-medium ${
               d === 1 ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground"
             }`}
           >
@@ -115,19 +82,70 @@ const ItineraryMockup = () => (
           </div>
         ))}
       </div>
-      <div className="space-y-1.5">
-        {[
-          { time: "9:00 AM", title: "Beach Morning", note: "Shallow water, shade available", color: "bg-sky-light" },
-          { time: "11:30 AM", title: "Rest & Snack 💤", note: "Nap window aligned", color: "bg-lavender-light" },
-          { time: "2:00 PM", title: "Aquarium Visit", note: "Stroller-friendly paths", color: "bg-mint-light" },
-        ].map((item) => (
-          <div key={item.title} className={`rounded-lg ${item.color} p-2.5`}>
-            <div className="flex items-center gap-1.5 mb-0.5">
-              <Clock className="h-2.5 w-2.5 text-muted-foreground" />
-              <span className="text-[9px] text-muted-foreground font-medium">{item.time}</span>
+    </div>
+    <div className="px-3 pb-1">
+      <p className="font-display text-[10px] font-bold text-foreground">Day 1 · Arrival & Beach</p>
+      <p className="text-[8px] italic text-muted-foreground mb-2">Settle in, feel the sand</p>
+    </div>
+    <div className="px-3 pb-3 space-y-2">
+      {[
+        {
+          time: "10:00 AM · ~1 HR",
+          title: "Arrive & unpack",
+          desc: "Get settled into the resort. No rush.",
+          rating: "94% of 127 parents say kid-friendly",
+          tags: ["Crib provided", "Pool access"],
+        },
+        {
+          time: "11:30 AM · 30 MIN",
+          title: "Beach walk",
+          desc: "Short stroll along Barceloneta beach.",
+          rating: "88% of 215 parents say kid-friendly",
+          tags: ["Sandy", "Calm waves", "Nearby cafés"],
+          skip: true,
+        },
+        {
+          time: "12:45 PM · ~1 HR",
+          title: "Nap / rest time 💤",
+          desc: "Back at resort for Milo's usual nap window.",
+          isRest: true,
+        },
+      ].map((item) => (
+        <div key={item.title} className={`rounded-xl border-l-[3px] ${item.isRest ? "border-l-sky bg-sky-light/30" : "border-l-coral bg-card"} p-2.5`}>
+          <div className="flex items-center justify-between mb-0.5">
+            <div className="flex items-center gap-1">
+              <MapPin className="h-2.5 w-2.5 text-muted-foreground" />
+              <span className="text-[8px] text-muted-foreground font-medium">{item.time}</span>
             </div>
-            <p className="text-[10px] font-bold text-foreground">{item.title}</p>
-            <p className="text-[9px] text-muted-foreground">{item.note}</p>
+            {item.skip && <span className="text-[7px] text-muted-foreground">easy to skip</span>}
+          </div>
+          <p className="text-[10px] font-bold text-foreground">{item.title}</p>
+          <p className="text-[8px] text-muted-foreground mb-1">{item.desc}</p>
+          {item.rating && (
+            <div className="flex items-center gap-1 mb-1">
+              <Users className="h-2.5 w-2.5 text-coral" />
+              <span className="text-[8px] font-medium text-foreground">{item.rating}</span>
+            </div>
+          )}
+          {item.tags && (
+            <div className="flex gap-1 flex-wrap">
+              {item.tags.map((tag) => (
+                <span key={tag} className="rounded-full bg-coral-light px-1.5 py-0.5 text-[7px] font-medium text-coral">
+                  {tag}
+                </span>
+              ))}
+            </div>
+          )}
+        </div>
+      ))}
+    </div>
+    {/* Quick adjustments */}
+    <div className="px-3 pb-3">
+      <p className="text-[9px] font-bold text-foreground mb-1.5">Quick adjustments</p>
+      <div className="grid grid-cols-2 gap-1.5">
+        {["Make lighter", "Add more rest", "Less walking", "Stay nearby"].map((adj) => (
+          <div key={adj} className="rounded-lg border border-border px-2 py-1.5 text-[8px] font-medium text-foreground text-center">
+            {adj}
           </div>
         ))}
       </div>
@@ -135,46 +153,75 @@ const ItineraryMockup = () => (
   </div>
 );
 
-// ── Step 4: In-trip mockup ──
-const InTripMockup = () => (
+// ── Step 3: Live map + plan mockup ──
+const LivePlanMockup = () => (
   <div className="rounded-2xl border border-border bg-card shadow-card overflow-hidden">
-    <div className="p-3">
-      <p className="font-display text-xs font-bold text-foreground">Your Plan — Live</p>
-      <p className="text-[10px] text-muted-foreground mb-2">Day 1 · Morning Adventures</p>
-    </div>
-    {/* Mini map */}
-    <div className="relative h-28 mx-3 rounded-xl bg-gradient-to-br from-sky-light via-mint-light to-sunny-light overflow-hidden">
-      <div className="absolute inset-0 opacity-20">
-        {[...Array(6)].map((_, i) => (
-          <div key={`h-${i}`} className="absolute h-px w-full bg-foreground/20" style={{ top: `${i * 20}%` }} />
-        ))}
-        {[...Array(6)].map((_, i) => (
-          <div key={`v-${i}`} className="absolute h-full w-px bg-foreground/20" style={{ left: `${i * 20}%` }} />
-        ))}
-      </div>
-      <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-        <div className="flex h-8 w-8 items-center justify-center rounded-full bg-coral shadow-lg">
-          <Navigation className="h-4 w-4 text-primary-foreground" />
-        </div>
-      </div>
-      <div className="absolute left-[25%] top-[30%] flex h-5 w-5 items-center justify-center rounded-full bg-mint shadow">
-        <Baby className="h-2.5 w-2.5 text-primary-foreground" />
-      </div>
-      <div className="absolute right-[20%] bottom-[25%] flex h-5 w-5 items-center justify-center rounded-full bg-sunny shadow">
-        <Footprints className="h-2.5 w-2.5 text-primary-foreground" />
-      </div>
-    </div>
-    <div className="p-3 space-y-1.5">
-      {[
-        { time: "Now", title: "Beach Playtime 🏖️", active: true },
-        { time: "11:30", title: "Nap Break 💤", active: false },
-      ].map((a) => (
-        <div key={a.title} className={`rounded-lg border p-2.5 ${a.active ? "border-primary bg-coral-light/50" : "border-border"}`}>
-          <div className="flex items-center gap-1.5 mb-0.5">
-            <Clock className="h-2.5 w-2.5 text-muted-foreground" />
-            <span className="text-[9px] text-muted-foreground font-medium">{a.time}</span>
+    <div className="p-3 pb-1">
+      <p className="font-display text-xs font-bold text-foreground">Your Plan</p>
+      <p className="text-[10px] text-muted-foreground mb-2">Day 2 · Cultural Morning</p>
+      <div className="flex gap-1.5 mb-2">
+        {[1, 2, 3].map((d) => (
+          <div
+            key={d}
+            className={`px-3 py-1 rounded-lg text-[10px] font-medium ${
+              d === 2 ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground"
+            }`}
+          >
+            Day {d}
           </div>
-          <p className="text-[10px] font-bold text-foreground">{a.title}</p>
+        ))}
+      </div>
+    </div>
+    {/* Map area */}
+    <div className="relative h-32 mx-3 rounded-xl bg-gradient-to-br from-sky-light via-mint-light to-sunny-light overflow-hidden mb-2">
+      {/* Faux map grid */}
+      <div className="absolute inset-0 opacity-15">
+        {[...Array(8)].map((_, i) => (
+          <div key={`h-${i}`} className="absolute h-px w-full bg-foreground/30" style={{ top: `${i * 14}%` }} />
+        ))}
+        {[...Array(8)].map((_, i) => (
+          <div key={`v-${i}`} className="absolute h-full w-px bg-foreground/30" style={{ left: `${i * 14}%` }} />
+        ))}
+      </div>
+      {/* Route line */}
+      <svg className="absolute inset-0 w-full h-full" viewBox="0 0 200 100">
+        <path d="M40,70 C60,30 80,25 100,35 S140,50 160,30" stroke="hsl(var(--primary))" strokeWidth="2.5" fill="none" strokeLinecap="round" strokeDasharray="0" opacity="0.7" />
+        <circle cx="40" cy="70" r="4" fill="hsl(var(--primary))" />
+        <circle cx="100" cy="35" r="3" fill="hsl(var(--coral))" />
+        <circle cx="160" cy="30" r="4" fill="hsl(var(--coral))" />
+      </svg>
+      {/* Distance badges */}
+      <div className="absolute top-2 right-2 bg-card/90 backdrop-blur-sm rounded-lg px-2 py-1 shadow-sm">
+        <p className="text-[8px] font-bold text-foreground">🚶 53 min</p>
+        <p className="text-[7px] text-muted-foreground">3.9 km</p>
+      </div>
+      <div className="absolute bottom-2 left-2 bg-card/90 backdrop-blur-sm rounded-lg px-2 py-1 shadow-sm">
+        <p className="text-[8px] font-bold text-foreground">🚶 51 min</p>
+        <p className="text-[7px] text-muted-foreground">3.8 km</p>
+      </div>
+      {/* Place labels */}
+      <div className="absolute top-3 left-3">
+        <p className="text-[7px] font-medium text-foreground/60">Sagrada Família</p>
+      </div>
+    </div>
+    <div className="px-3 pb-3 space-y-1.5">
+      {[
+        { time: "9:30 AM · ~45 min", title: "Breakfast at resort", desc: "Start slow. Buffet options for little ones." },
+        { time: "10:30 AM · ~1 hr", title: "Park Güell visit", desc: "Mosaic wonderland. Book the quieter morning slot.", tip: "🧩 Colourful tiles keep toddlers engaged" },
+        { time: "12:00 PM · ~45 min", title: "Lunch nearby", desc: "Family-friendly tapas near the park." },
+      ].map((item) => (
+        <div key={item.title} className="rounded-xl border border-border p-2.5">
+          <div className="flex items-center gap-1 mb-0.5">
+            <Clock className="h-2.5 w-2.5 text-muted-foreground" />
+            <span className="text-[8px] text-muted-foreground font-medium">{item.time}</span>
+          </div>
+          <p className="text-[10px] font-bold text-foreground">{item.title}</p>
+          <p className="text-[8px] text-muted-foreground">{item.desc}</p>
+          {item.tip && (
+            <div className="mt-1 rounded-lg bg-coral-light/60 px-2 py-1">
+              <p className="text-[8px] font-medium text-coral">{item.tip}</p>
+            </div>
+          )}
         </div>
       ))}
     </div>
@@ -184,31 +231,24 @@ const InTripMockup = () => (
 const steps = [
   {
     step: "1",
-    emoji: "👶",
-    title: "Tell us about your child",
-    description: "Age, mobility, nap schedule, allergies, interests — we capture every detail that matters.",
-    Mockup: ProfileMockup,
+    emoji: "🧒",
+    title: "Share your child's rhythm",
+    description: "Nap times, energy peaks, meal windows, allergies — we learn your child's daily routine so every plan fits naturally.",
+    Mockup: RoutineMockup,
   },
   {
     step: "2",
-    emoji: "👨‍👩‍👧",
-    title: "Pick who's traveling",
-    description: "Select family members and we generate a personalized plan around your child's needs.",
-    Mockup: TravelerMockup,
-  },
-  {
-    step: "3",
     emoji: "🗺️",
-    title: "Get a smart itinerary",
-    description: "Drag, reorder, adjust pacing. Every activity is rated for kid-friendliness with built-in rest time.",
+    title: "Every activity, shaped around them",
+    description: "Kid-friendly ratings from real parents, built-in rest stops, adjustable pacing — an itinerary that respects your child's limits.",
     Mockup: ItineraryMockup,
   },
   {
-    step: "4",
-    emoji: "🎉",
-    title: "Enjoy the trip — live",
-    description: "Real-time map, timeline, and smart nudges so you can be present instead of planning.",
-    Mockup: InTripMockup,
+    step: "3",
+    emoji: "📍",
+    title: "Follow along, stress-free",
+    description: "Live map with walking distances, real-time timeline, and smart tips — so you can be present instead of planning.",
+    Mockup: LivePlanMockup,
   },
 ];
 
@@ -237,7 +277,7 @@ export const JourneyShowcase = () => {
             </span>
           </h2>
           <p className="font-body text-lg text-card/90">
-            Four steps from "we have a toddler" to "we had the best trip ever."
+            Three steps from "we have a toddler" to "we had the best trip ever."
           </p>
         </motion.div>
 
@@ -296,7 +336,7 @@ export const JourneyShowcase = () => {
           className="mt-16 text-center"
         >
           <p className="font-handwriting text-xl text-muted-foreground md:text-2xl">
-            That's it. <span className="text-foreground">Tell us about your kid → We plan around them → Enjoy the trip</span>. 🌈
+            That's it. <span className="text-foreground">Share their rhythm → We plan around them → Enjoy the trip</span>. 🌈
           </p>
         </motion.div>
       </div>
