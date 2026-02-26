@@ -29,7 +29,7 @@ export const VideoShowcase = () => {
   return (
     <>
       {/* Full-screen YouTube video section */}
-      <section className="relative min-h-screen flex items-center justify-center bg-foreground">
+      <section className="relative min-h-screen flex items-center justify-center bg-cream">
         <div className="container mx-auto px-4 py-16 w-full">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
