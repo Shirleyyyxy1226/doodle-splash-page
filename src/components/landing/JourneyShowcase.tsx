@@ -295,7 +295,7 @@ export const JourneyShowcase = () => {
                       Step {step.step}
                     </span>
                   </div>
-                  <h3 className="mb-3 font-display text-2xl font-bold text-foreground md:text-3xl">
+                  <h3 className="mb-3 font-body text-2xl font-bold text-foreground md:text-3xl">
                     {step.title}
                   </h3>
                   {step.description && (
