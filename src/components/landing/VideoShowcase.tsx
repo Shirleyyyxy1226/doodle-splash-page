@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Baby, Heart, Star } from "lucide-react";
+import { Baby, Heart, Star, Sparkles } from "lucide-react";
 import childProfileImg from "@/assets/card-child-profile.jpg";
 import napScheduleImg from "@/assets/card-nap-schedule.png";
 import liveTripImg from "@/assets/card-live-trip.png";
@@ -54,14 +54,17 @@ export const VideoShowcase = () => {
       {/* Feature cards section */}
       <section className="bg-cream py-16 lg:py-24">
         <div className="container mx-auto px-4">
-          <motion.h2
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="mb-12 text-center font-body text-2xl font-bold text-foreground md:text-3xl lg:text-4xl"
+            className="mb-8"
           >
-            Everything Your Family Trip Needs
-          </motion.h2>
+            <h2 className="font-body text-2xl font-bold text-foreground flex items-center gap-2 md:text-3xl">
+              <Sparkles size={20} className="text-secondary" />
+              Everything Your Family Trip Needs
+            </h2>
+          </motion.div>
           <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
             {features.map((feature, i) => {
               const Icon = feature.icon;
