@@ -96,6 +96,7 @@ export const Hero = () => {
           backgroundSize: 'cover',
           backgroundPosition: 'center 40%',
           backgroundRepeat: 'no-repeat',
+          backgroundBlendMode: 'multiply',
         }}
       >
         <div className="absolute top-6 left-6 z-20 rounded-full bg-foreground/70 px-4 py-1.5 text-sm font-bold text-primary-foreground">
