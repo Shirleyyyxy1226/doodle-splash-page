@@ -218,6 +218,7 @@ const steps = [
     title: "Share your child's rhythm",
     description: "Nap times, energy peaks, meal windows, allergies — we learn your child's daily routine so every plan fits naturally.",
     Mockup: RoutineMockup,
+    color: { bg: "bg-coral", text: "text-coral" },
   },
   {
     step: "2",
@@ -231,6 +232,7 @@ const steps = [
       { text: "Interests", color: "text-mint" },
     ],
     Mockup: ItineraryMockup,
+    color: { bg: "bg-sunny", text: "text-sunny" },
   },
   {
     step: "3",
@@ -238,6 +240,7 @@ const steps = [
     title: "Follow along, stress-free",
     description: "Live map with walking distances, real-time timeline, and smart tips — so you can be present instead of planning.",
     Mockup: LivePlanMockup,
+    color: { bg: "bg-mint", text: "text-mint" },
   },
 ];
 
@@ -288,10 +291,10 @@ export const JourneyShowcase = () => {
                 {/* Text */}
                 <div className="flex-1 text-center lg:text-left">
                   <div className="mb-3 inline-flex items-center gap-2">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary text-primary-foreground font-display text-lg font-bold shadow-soft">
+                    <div className={`flex h-10 w-10 items-center justify-center rounded-full ${step.color.bg} text-primary-foreground font-display text-lg font-bold shadow-soft`}>
                       {step.emoji}
                     </div>
-                    <span className="text-xs font-bold text-primary uppercase tracking-wider font-display">
+                    <span className={`text-xs font-bold ${step.color.text} uppercase tracking-wider font-display`}>
                       Step {step.step}
                     </span>
                   </div>
