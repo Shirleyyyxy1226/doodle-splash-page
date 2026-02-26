@@ -225,10 +225,10 @@ const steps = [
     title: "An itinerary built around your child",
     description: "",
     highlights: [
-      { emoji: "🎂", text: "Paced for their age & energy" },
-      { emoji: "💤", text: "Nap windows protected" },
-      { emoji: "🥜", text: "Allergies flagged at every stop" },
-      { emoji: "⭐", text: "Activities matched to interests" },
+      { text: "Age & Energy", color: "text-coral" },
+      { text: "Nap Windows", color: "text-sky" },
+      { text: "Allergies", color: "text-sunny" },
+      { text: "Interests", color: "text-mint" },
     ],
     Mockup: ItineraryMockup,
   },
@@ -304,28 +304,56 @@ export const JourneyShowcase = () => {
                     </p>
                   )}
                   {step.highlights && (
-                    <div className="mt-4 flex flex-wrap gap-2 justify-center lg:justify-start">
-                      {step.highlights.map((h: { emoji: string; text: string }) => (
-                        <motion.span
-                          key={h.text}
-                          initial={{ opacity: 0, y: 10 }}
-                          whileInView={{ opacity: 1, y: 0 }}
-                          viewport={{ once: true }}
-                          className="inline-flex items-center gap-1.5 rounded-full bg-coral-light/60 px-3 py-1.5 font-body text-sm font-medium text-foreground shadow-sm"
-                        >
-                          <span>{h.emoji}</span>
-                          {h.text}
-                        </motion.span>
-                      ))}
-                    </div>
+                    <p className="mt-2 font-body text-sm text-muted-foreground">
+                      Personalised around what matters most.
+                    </p>
                   )}
                 </div>
 
-                {/* Mockup */}
-                <div className="w-full max-w-[280px] flex-shrink-0">
+                {/* Mockup with floating text */}
+                <div className="w-full max-w-[280px] flex-shrink-0 relative">
+                  {step.highlights && (
+                    <>
+                      <motion.span
+                        initial={{ opacity: 0, x: -20 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        className="absolute -left-32 top-[12%] font-display text-2xl font-bold text-coral/20 whitespace-nowrap hidden lg:block"
+                      >
+                        Age & Energy
+                      </motion.span>
+                      <motion.span
+                        initial={{ opacity: 0, x: -20 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: 0.15 }}
+                        className="absolute -left-24 top-[55%] font-display text-xl font-bold text-sunny/30 whitespace-nowrap hidden lg:block"
+                      >
+                        Allergies
+                      </motion.span>
+                      <motion.span
+                        initial={{ opacity: 0, x: 20 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: 0.1 }}
+                        className="absolute -right-32 top-[28%] font-display text-xl font-bold text-sky/25 whitespace-nowrap hidden lg:block"
+                      >
+                        Nap Windows
+                      </motion.span>
+                      <motion.span
+                        initial={{ opacity: 0, x: 20 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: 0.2 }}
+                        className="absolute -right-24 top-[72%] font-display text-2xl font-bold text-mint/25 whitespace-nowrap hidden lg:block"
+                      >
+                        Interests
+                      </motion.span>
+                    </>
+                  )}
                   <motion.div
                     whileHover={{ y: -4, transition: { duration: 0.2 } }}
-                    className="transition-shadow hover:shadow-lifted"
+                    className="transition-shadow hover:shadow-lifted relative z-10"
                   >
                     <step.Mockup />
                   </motion.div>
