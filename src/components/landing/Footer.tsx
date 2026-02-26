@@ -9,7 +9,7 @@ export const Footer = () => {
           {/* Logo */}
           <div className="flex items-center gap-2">
             <img src={kiddogoLogo} alt="Kiddogo" className="h-8 w-8" />
-            <span className="font-display text-xl font-bold text-card">Kiddogo</span>
+            <span className="font-body text-xl font-bold text-card">KiddoGo</span>
           </div>
 
           {/* Links */}
@@ -33,7 +33,7 @@ export const Footer = () => {
             Made with <Heart className="h-4 w-4 fill-coral text-coral" /> for families with little ones
           </p>
           <p className="font-body text-xs text-muted-foreground">
-            © 2026 Kiddogo. Kid-conscious travel planning.
+            © 2026 KiddoGo. Kid-conscious travel planning.
           </p>
         </div>
       </div>

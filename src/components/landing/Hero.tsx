@@ -59,7 +59,7 @@ export const Hero = () => {
           className="mx-auto mb-8 max-w-lg font-body text-sm text-muted-foreground md:text-base"
         >
           Age, naps, allergies, energy levels — no detail is too small.
-          Kiddogo builds travel itineraries that{" "}
+          KiddoGo builds travel itineraries that{" "}
           <span className="font-semibold text-foreground">actually work for families</span>. ✨
         </motion.p>
 

@@ -254,7 +254,7 @@ export const JourneyShowcase = () => {
         >
           <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-card/20 backdrop-blur-sm px-4 py-2">
             <span className="text-lg">✨</span>
-            <span className="font-body font-semibold text-card">How Kiddogo Works</span>
+            <span className="font-body font-semibold text-card">How KiddoGo Works</span>
           </div>
           <h2 className="mb-4 font-handwriting text-4xl leading-tight text-card md:text-5xl">
             Your Journey,{" "}
