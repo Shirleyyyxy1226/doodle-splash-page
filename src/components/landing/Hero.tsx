@@ -111,7 +111,7 @@ export const Hero = () => {
                   />
                 </div>
                 <div className="p-5">
-                  <h3 className="mb-2 flex items-center gap-2 font-display text-lg font-bold text-foreground">
+                  <h3 className="mb-2 flex items-center gap-2 font-body text-lg font-bold text-foreground">
                     <Icon className="h-5 w-5 text-coral" />
                     {feature.title}
                   </h3>
