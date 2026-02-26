@@ -19,16 +19,8 @@ const HeroContent = () => (
         <span className="text-gradient-coral">Without the Mental Load.</span>
       </motion.h1>
 
-      <motion.p
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.4 }}
-        className="mx-auto mb-8 max-w-lg font-body text-sm text-muted-foreground md:text-base"
-      >
-        Age, naps, allergies, energy levels — no detail is too small.
-        KiddoGo builds travel itineraries that{" "}
-        <span className="font-semibold text-foreground">actually work for families</span>. ✨
-      </motion.p>
+
+
 
       <motion.div
         initial={{ opacity: 0, y: 20 }}
