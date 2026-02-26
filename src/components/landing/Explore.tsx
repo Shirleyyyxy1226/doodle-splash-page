@@ -180,7 +180,7 @@ export const Explore = () => {
           viewport={{ once: true }}
         >
           <div className="flex items-center justify-between mb-3">
-            <h2 className="font-display text-2xl font-bold text-foreground flex items-center gap-2 md:text-3xl">
+            <h2 className="font-body text-2xl font-bold text-foreground flex items-center gap-2 md:text-3xl">
               <Sparkles size={20} className="text-secondary" />
               Popular Places
             </h2>
@@ -214,7 +214,7 @@ export const Explore = () => {
           className="mt-14"
         >
           <div className="flex items-center justify-between mb-3">
-            <h2 className="font-display text-2xl font-bold text-foreground md:text-3xl">
+            <h2 className="font-body text-2xl font-bold text-foreground md:text-3xl">
               Popular Events
             </h2>
           </div>
