@@ -243,8 +243,8 @@ const steps = [
 
 export const JourneyShowcase = () => {
   return (
-    <section id="journey" className="bg-card py-20 lg:py-28">
-      <div className="container mx-auto px-4">
+    <section id="journey" className="bg-card py-20 lg:py-28 overflow-visible">
+      <div className="container mx-auto px-4 overflow-visible">
         {/* Section header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -314,38 +314,40 @@ export const JourneyShowcase = () => {
                 <div className="w-full max-w-[280px] flex-shrink-0 relative overflow-visible">
                   {step.highlights && (
                     <>
+                      {/* Right side (towards center of page since mockup is on left in reversed layout) */}
                       <motion.span
-                        initial={{ opacity: 0, x: -20 }}
+                        initial={{ opacity: 0, x: 20 }}
                         whileInView={{ opacity: 0.35, x: 0 }}
                         viewport={{ once: true }}
-                        className="absolute -left-36 top-[10%] font-display text-3xl font-extrabold text-coral whitespace-nowrap hidden lg:block select-none pointer-events-none"
+                        className="absolute -right-40 top-[8%] font-display text-3xl font-extrabold text-coral whitespace-nowrap hidden lg:block select-none pointer-events-none"
                       >
                         Age & Energy
                       </motion.span>
                       <motion.span
-                        initial={{ opacity: 0, x: -20 }}
-                        whileInView={{ opacity: 0.3, x: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: 0.15 }}
-                        className="absolute -left-28 top-[55%] font-display text-2xl font-extrabold text-sunny whitespace-nowrap hidden lg:block select-none pointer-events-none"
-                      >
-                        Allergies
-                      </motion.span>
-                      <motion.span
                         initial={{ opacity: 0, x: 20 }}
                         whileInView={{ opacity: 0.3, x: 0 }}
                         viewport={{ once: true }}
+                        transition={{ delay: 0.15 }}
+                        className="absolute -right-32 top-[52%] font-display text-2xl font-extrabold text-sunny whitespace-nowrap hidden lg:block select-none pointer-events-none"
+                      >
+                        Allergies
+                      </motion.span>
+                      {/* Left side (towards page edge - keep closer) */}
+                      <motion.span
+                        initial={{ opacity: 0, x: -20 }}
+                        whileInView={{ opacity: 0.3, x: 0 }}
+                        viewport={{ once: true }}
                         transition={{ delay: 0.1 }}
-                        className="absolute -right-36 top-[25%] font-display text-2xl font-extrabold text-sky whitespace-nowrap hidden lg:block select-none pointer-events-none"
+                        className="absolute -left-16 top-[25%] font-display text-2xl font-extrabold text-sky whitespace-nowrap hidden lg:block select-none pointer-events-none"
                       >
                         Nap Windows
                       </motion.span>
                       <motion.span
-                        initial={{ opacity: 0, x: 20 }}
+                        initial={{ opacity: 0, x: -20 }}
                         whileInView={{ opacity: 0.35, x: 0 }}
                         viewport={{ once: true }}
                         transition={{ delay: 0.2 }}
-                        className="absolute -right-28 top-[72%] font-display text-3xl font-extrabold text-mint whitespace-nowrap hidden lg:block select-none pointer-events-none"
+                        className="absolute -left-10 top-[75%] font-display text-3xl font-extrabold text-mint whitespace-nowrap hidden lg:block select-none pointer-events-none"
                       >
                         Interests
                       </motion.span>
