@@ -1,8 +1,8 @@
 import { motion } from "framer-motion";
 import { Baby, Heart, Star, Sparkles } from "lucide-react";
 import childProfileImg from "@/assets/card-child-profile.jpg";
-import napScheduleImg from "@/assets/card-nap-schedule.png";
-import liveTripImg from "@/assets/card-live-trip.png";
+import napSyncedImg from "@/assets/card-nap-synced.jpg";
+import liveGuideImg from "@/assets/card-live-guide.jpg";
 
 const features = [
   {
@@ -16,14 +16,14 @@ const features = [
     icon: Heart,
     title: "Nap-synced plans",
     description: "Activities paced around your child's rest windows and energy.",
-    image: napScheduleImg,
+    image: napSyncedImg,
     stepId: "step-2",
   },
   {
     icon: Star,
     title: "Live trip guide",
     description: "Real-time map, timeline, and smart nudges while you travel.",
-    image: liveTripImg,
+    image: liveGuideImg,
     stepId: "step-3",
   },
 ];
