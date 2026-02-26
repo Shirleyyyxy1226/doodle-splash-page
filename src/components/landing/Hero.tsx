@@ -1,44 +1,20 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { Sparkles, ArrowDown, Baby, Heart, Star } from "lucide-react";
+import { Sparkles, ArrowDown } from "lucide-react";
 import heroBg from "@/assets/hero-bg.svg";
-import childProfileImg from "@/assets/card-child-profile.jpg";
-import napScheduleImg from "@/assets/card-nap-schedule.png";
-import liveTripImg from "@/assets/card-live-trip.png";
-
-const features = [
-  {
-    icon: Baby,
-    title: "Child profiles",
-    description: "Age, naps, allergies, energy levels — every detail shapes the plan.",
-    image: childProfileImg,
-  },
-  {
-    icon: Heart,
-    title: "Nap-synced plans",
-    description: "Activities paced around your child's rest windows and energy.",
-    image: napScheduleImg,
-  },
-  {
-    icon: Star,
-    title: "Live trip guide",
-    description: "Real-time map, timeline, and smart nudges while you travel.",
-    image: liveTripImg,
-  },
-];
 
 export const Hero = () => {
   return (
     <section
-      className="relative overflow-hidden bg-cream pt-20"
+      className="relative overflow-hidden bg-cream min-h-screen flex flex-col"
       style={{
         backgroundImage: `url(${heroBg})`,
-        backgroundSize: '1728px 1022px',
-        backgroundPosition: 'center calc(40% - 70px)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center 40%',
         backgroundRepeat: 'no-repeat',
       }}
     >
-      <div className="container relative z-10 mx-auto flex min-h-[60vh] flex-col items-center justify-center px-4 py-16 text-center">
+      <div className="container relative z-10 mx-auto flex flex-1 flex-col items-center justify-center px-4 text-center pt-20">
         {/* Headline */}
         <motion.h1
           initial={{ opacity: 0, y: 30 }}
@@ -86,44 +62,17 @@ export const Hero = () => {
             <ArrowDown className="ml-2 h-4 w-4" />
           </Button>
         </motion.div>
-
       </div>
 
-      {/* Feature cards */}
-      <div className="container relative z-10 mx-auto px-4 pb-24">
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-          {features.map((feature, i) => {
-            const Icon = feature.icon;
-            return (
-              <motion.div
-                key={feature.title}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.15 }}
-                className="overflow-hidden rounded-2xl bg-card shadow-card"
-              >
-                <div className="aspect-[4/3] overflow-hidden">
-                  <img
-                    src={feature.image}
-                    alt={feature.title}
-                    className="h-full w-full object-cover transition-transform duration-300 hover:scale-105"
-                  />
-                </div>
-                <div className="p-5">
-                  <h3 className="mb-2 flex items-center gap-2 font-body text-lg font-bold text-foreground">
-                    <Icon className="h-5 w-5 text-coral" />
-                    {feature.title}
-                  </h3>
-                  <p className="font-body text-sm leading-relaxed text-muted-foreground">
-                    {feature.description}
-                  </p>
-                </div>
-              </motion.div>
-            );
-          })}
-        </div>
-      </div>
+      {/* Scroll indicator */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1 }}
+        className="relative z-10 pb-8 text-center"
+      >
+        <ArrowDown className="mx-auto h-5 w-5 text-muted-foreground animate-bounce" />
+      </motion.div>
 
       {/* Wave divider */}
       <div className="absolute bottom-0 left-0 right-0 translate-y-[50px]">
