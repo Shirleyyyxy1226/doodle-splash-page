@@ -48,7 +48,7 @@ export const Contact = () => {
             Contact Us
           </h2>
           <p className="font-body text-lg text-muted-foreground mb-10">
-            <span className="font-bold text-foreground">Kiddogo</span> is looking for travel, parenting and development partners. Please get in touch!
+            <span className="font-bold text-foreground">KiddoGo</span> is looking for travel, parenting and development partners. Please get in touch!
           </p>
 
           <form onSubmit={handleSubmit} className="space-y-6">

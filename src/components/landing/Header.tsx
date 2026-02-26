@@ -25,7 +25,7 @@ export const Header = () => {
             whileTap={{ scale: 0.95 }}
           >
             <img src={kiddogoLogo} alt="Kiddogo" className="h-9 w-9" />
-            <span className="font-handwriting text-2xl text-foreground">KiddoGo</span>
+            <span className="font-body text-2xl font-bold text-foreground">KiddoGo</span>
           </motion.a>
 
           {/* Desktop nav */}
