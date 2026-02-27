@@ -2,8 +2,6 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Sparkles, ArrowDown } from "lucide-react";
 import heroBg from "@/assets/hero-bg.svg";
-import heroBgV2 from "@/assets/hero-bg-v2.svg";
-import heroBgV3 from "@/assets/hero-bg-v3.png";
 
 const HeroContent = () => (
   <>
@@ -57,7 +55,7 @@ const HeroContent = () => (
   </>
 );
 
-const HeroSection = ({ label, bgImage, bgStyle }: { label: string; bgImage: string; bgStyle?: React.CSSProperties }) => (
+const HeroSection = ({ bgImage, bgStyle }: { bgImage: string; bgStyle?: React.CSSProperties }) => (
   <section
     className="relative overflow-hidden bg-cream min-h-screen flex flex-col"
     style={{
@@ -68,9 +66,6 @@ const HeroSection = ({ label, bgImage, bgStyle }: { label: string; bgImage: stri
       ...bgStyle,
     }}
   >
-    <div className="absolute top-24 left-6 z-20 rounded-full bg-foreground/70 px-4 py-1.5 text-sm font-bold text-primary-foreground">
-      {label}
-    </div>
     <HeroContent />
     <div className="absolute bottom-0 left-0 right-0 translate-y-[50px]">
       <svg viewBox="0 0 1440 120" className="w-full fill-card">
@@ -81,11 +76,5 @@ const HeroSection = ({ label, bgImage, bgStyle }: { label: string; bgImage: stri
 );
 
 export const Hero = () => {
-  return (
-    <>
-      <HeroSection label="Version 1" bgImage={heroBg} />
-      <HeroSection label="Version 2" bgImage={heroBgV2} bgStyle={{ backgroundBlendMode: 'multiply' }} />
-      <HeroSection label="Version 3" bgImage={heroBgV3} />
-    </>
-  );
+  return <HeroSection bgImage={heroBg} />;
 };
