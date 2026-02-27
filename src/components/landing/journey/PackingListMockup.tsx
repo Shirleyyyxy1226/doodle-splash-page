@@ -28,6 +28,7 @@ const initialItems: PackingItem[] = [
 ];
 
 export const PackingListMockup = () => {
+  const [activeCategory, setActiveCategory] = useState("All");
   const [items, setItems] = useState(initialItems);
 
   const toggleItem = (index: number) => {
@@ -36,6 +37,7 @@ export const PackingListMockup = () => {
     );
   };
 
+  const filtered = activeCategory === "All" ? items : items.filter((i) => i.category === activeCategory);
   const checkedCount = items.filter((i) => i.checked).length;
 
   return (
@@ -45,6 +47,22 @@ export const PackingListMockup = () => {
         <p className="text-[9px] text-muted-foreground">Mar 27 – Apr 04</p>
       </div>
 
+      {/* Category filter */}
+      <div className="px-3 mb-2 flex gap-1 flex-wrap">
+        {categories.map((cat) => (
+          <button
+            key={cat}
+            onClick={() => setActiveCategory(cat)}
+            className={`rounded-full px-2.5 py-1 text-[8px] font-medium transition-all ${
+              activeCategory === cat
+                ? "bg-coral text-primary-foreground"
+                : "bg-muted text-muted-foreground"
+            }`}
+          >
+            {cat}
+          </button>
+        ))}
+      </div>
 
       {/* Weather strip */}
       <div className="mx-3 mb-2 rounded-xl bg-sky-light/50 p-2.5">
@@ -85,8 +103,8 @@ export const PackingListMockup = () => {
 
       {/* Items */}
       <div className="px-3 pb-3 space-y-1">
-        {items.map((item, i) => {
-          const realIndex = i;
+        {filtered.map((item, i) => {
+          const realIndex = items.indexOf(item);
           return (
             <div
               key={item.name}
