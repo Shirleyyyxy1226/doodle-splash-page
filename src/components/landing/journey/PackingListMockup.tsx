@@ -28,7 +28,6 @@ const initialItems: PackingItem[] = [
 ];
 
 export const PackingListMockup = () => {
-  const [activeCategory, setActiveCategory] = useState("All");
   const [items, setItems] = useState(initialItems);
 
   const toggleItem = (index: number) => {
@@ -37,7 +36,6 @@ export const PackingListMockup = () => {
     );
   };
 
-  const filtered = activeCategory === "All" ? items : items.filter((i) => i.category === activeCategory);
   const checkedCount = items.filter((i) => i.checked).length;
 
   return (
@@ -48,21 +46,28 @@ export const PackingListMockup = () => {
       </div>
 
 
-      {/* Category filter */}
-      <div className="px-3 mb-2 flex gap-1 overflow-x-auto">
-        {categories.map((cat) => (
-          <button
-            key={cat}
-            onClick={() => setActiveCategory(cat)}
-            className={`shrink-0 rounded-full px-2.5 py-1 text-[8px] font-medium transition-all ${
-              activeCategory === cat
-                ? "bg-coral text-primary-foreground"
-                : "bg-muted text-muted-foreground"
-            }`}
-          >
-            {cat}
-          </button>
-        ))}
+      {/* Weather strip */}
+      <div className="mx-3 mb-2 rounded-xl bg-sky-light/50 p-2.5">
+        <div className="flex items-center gap-1 mb-2">
+          <Sun className="h-3 w-3 text-sunny" />
+          <span className="text-[8px] font-medium text-foreground">Barcelona · Mar 27 – Apr 04</span>
+        </div>
+        <div className="flex gap-1 overflow-x-auto">
+          {weatherDays.map((w, i) => {
+            const Icon = w.icon;
+            return (
+              <div
+                key={`${w.day}-${i}`}
+                className={`flex flex-col items-center px-1.5 py-1 rounded-lg shrink-0 ${i === 0 ? "bg-card shadow-sm" : ""}`}
+              >
+                <span className="text-[7px] font-medium text-muted-foreground">{w.day}</span>
+                <Icon className="h-3 w-3 text-sunny my-0.5" />
+                <span className="text-[9px] font-bold text-foreground">{w.high}°</span>
+                <span className="text-[7px] text-muted-foreground">{w.low}°</span>
+              </div>
+            );
+          })}
+        </div>
       </div>
 
       {/* Progress */}
@@ -80,8 +85,8 @@ export const PackingListMockup = () => {
 
       {/* Items */}
       <div className="px-3 pb-3 space-y-1">
-        {filtered.map((item, i) => {
-          const realIndex = items.indexOf(item);
+        {items.map((item, i) => {
+          const realIndex = i;
           return (
             <div
               key={item.name}
