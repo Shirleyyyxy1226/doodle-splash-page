@@ -46,23 +46,6 @@ export const PackingListMockup = () => {
         <p className="text-[9px] text-muted-foreground">Mar 27 – Apr 04</p>
       </div>
 
-      {/* Category filter */}
-      <div className="px-3 mb-2 flex gap-1 flex-wrap">
-        {categories.map((cat) => (
-          <button
-            key={cat}
-            onClick={() => setActiveCategory(cat)}
-            className={`rounded-full px-2.5 py-1 text-[8px] font-medium transition-all ${
-              activeCategory === cat
-                ? "bg-coral text-primary-foreground"
-                : "bg-muted text-muted-foreground"
-            }`}
-          >
-            {cat}
-          </button>
-        ))}
-      </div>
-
       {/* Weather strip */}
       <div className="mx-3 mb-2 rounded-xl bg-sky-light/50 p-2.5">
         <div className="flex items-center gap-1 mb-2">
@@ -85,6 +68,23 @@ export const PackingListMockup = () => {
             );
           })}
         </div>
+      </div>
+
+      {/* Category filter */}
+      <div className="px-3 mb-2 flex gap-1 flex-nowrap">
+        {categories.map((cat) => (
+          <button
+            key={cat}
+            onClick={() => setActiveCategory(cat)}
+            className={`rounded-full px-2 py-0.5 text-[7px] font-medium transition-all whitespace-nowrap ${
+              activeCategory === cat
+                ? "bg-coral text-primary-foreground"
+                : "bg-muted text-muted-foreground"
+            }`}
+          >
+            {cat}
+          </button>
+        ))}
       </div>
 
       {/* Progress */}
