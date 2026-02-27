@@ -25,8 +25,6 @@ const initialItems: PackingItem[] = [
   { name: "Diapers", category: "Kids Essentials", checked: false },
   { name: "Passport", category: "Documents", checked: false },
   { name: "Sunscreen", category: "Toiletries", checked: false },
-  { name: "Swim nappies", category: "Kids Essentials", checked: false },
-  { name: "Light jacket", category: "Clothing", checked: false },
 ];
 
 export const PackingListMockup = () => {
@@ -49,29 +47,6 @@ export const PackingListMockup = () => {
         <p className="text-[9px] text-muted-foreground">Mar 27 – Apr 04</p>
       </div>
 
-      {/* Weather strip */}
-      <div className="mx-3 mb-2 rounded-xl bg-sky-light/50 p-2.5">
-        <div className="flex items-center gap-1 mb-2">
-          <Sun className="h-3 w-3 text-sunny" />
-          <span className="text-[8px] font-medium text-foreground">Barcelona · Mar 27 – Apr 04</span>
-        </div>
-        <div className="flex gap-1 overflow-x-auto">
-          {weatherDays.map((w, i) => {
-            const Icon = w.icon;
-            return (
-              <div
-                key={`${w.day}-${i}`}
-                className={`flex flex-col items-center px-1.5 py-1 rounded-lg shrink-0 ${i === 0 ? "bg-card shadow-sm" : ""}`}
-              >
-                <span className="text-[7px] font-medium text-muted-foreground">{w.day}</span>
-                <Icon className="h-3 w-3 text-sunny my-0.5" />
-                <span className="text-[9px] font-bold text-foreground">{w.high}°</span>
-                <span className="text-[7px] text-muted-foreground">{w.low}°</span>
-              </div>
-            );
-          })}
-        </div>
-      </div>
 
       {/* Category filter */}
       <div className="px-3 mb-2 flex gap-1 overflow-x-auto">

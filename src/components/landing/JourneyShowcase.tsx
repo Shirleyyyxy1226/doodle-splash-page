@@ -29,19 +29,19 @@ const steps = [
   },
   {
     step: "3",
-    emoji: "📍",
-    title: "Follow along, stress-free",
-    description: "Live map with walking distances, parent ratings, and smart tips — so you can be present instead of planning.",
-    Mockup: LivePlanMockup,
-    color: { bg: "bg-mint", text: "text-mint" },
-  },
-  {
-    step: "4",
     emoji: "🧳",
     title: "Pack smart, forget nothing",
     description: "Weather-aware packing lists with kid essentials, sorted by category. Check items off as you go.",
     Mockup: PackingListMockup,
     color: { bg: "bg-sky", text: "text-sky" },
+  },
+  {
+    step: "4",
+    emoji: "📍",
+    title: "Follow along, stress-free",
+    description: "Live map with walking distances, parent ratings, and smart tips — so you can be present instead of planning.",
+    Mockup: LivePlanMockup,
+    color: { bg: "bg-mint", text: "text-mint" },
   },
 ];
 
