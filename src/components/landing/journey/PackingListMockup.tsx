@@ -9,7 +9,6 @@ const weatherDays = [
   { day: "Sun", icon: CloudSun, high: 27, low: 16 },
   { day: "Mon", icon: CloudSun, high: 27, low: 16 },
   { day: "Tue", icon: Cloud, high: 26, low: 15 },
-  { day: "Wed", icon: CloudRain, high: 25, low: 15 },
 ];
 
 const categories = ["All", "Kids Essentials", "Clothing", "Documents", "Toiletries"];
@@ -70,7 +69,7 @@ export const PackingListMockup = () => {
           <Sun className="h-3 w-3 text-sunny" />
           <span className="text-[8px] font-medium text-foreground">Barcelona · Mar 27 – Apr 04</span>
         </div>
-        <div className="flex gap-1 overflow-x-auto">
+        <div className="flex gap-1">
           {weatherDays.map((w, i) => {
             const Icon = w.icon;
             return (
