@@ -48,10 +48,18 @@ export const EnergyTimelineInteractive = () => {
           desiredCenter: b.startHour + (b.endHour - b.startHour) / 2,
         }))
         .sort((a, b) => {
+          // Edge-crossing swap: swap as soon as dragged edge crosses neighbor edge
+          if (a.id === movedId && b.id !== movedId) {
+            if (dragDirection > 0) return a.endHour > b.startHour ? 1 : -1;
+            if (dragDirection < 0) return a.startHour < b.endHour ? -1 : 1;
+          }
+          if (b.id === movedId && a.id !== movedId) {
+            if (dragDirection > 0) return b.endHour > a.startHour ? -1 : 1;
+            if (dragDirection < 0) return b.startHour < a.endHour ? 1 : -1;
+          }
+
           const diff = a.desiredCenter - b.desiredCenter;
           if (Math.abs(diff) > 0.001) return diff;
-          if (a.id === movedId && b.id !== movedId) return dragDirection < 0 ? -1 : 1;
-          if (b.id === movedId && a.id !== movedId) return dragDirection < 0 ? 1 : -1;
           return 0;
         });
 
