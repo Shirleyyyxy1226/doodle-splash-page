@@ -3,6 +3,7 @@ import { Hero } from "@/components/landing/Hero";
 import { VideoShowcase } from "@/components/landing/VideoShowcase";
 import { Explore } from "@/components/landing/Explore";
 import { JourneyShowcase } from "@/components/landing/JourneyShowcase";
+import { FeaturesShowcase } from "@/components/landing/FeaturesShowcase";
 import { CallToAction } from "@/components/landing/CallToAction";
 import { Contact } from "@/components/landing/Contact";
 import { Footer } from "@/components/landing/Footer";
@@ -15,6 +16,7 @@ const Index = () => {
         <Hero />
         <VideoShowcase />
         <JourneyShowcase />
+        <FeaturesShowcase />
         <Explore />
         <CallToAction />
         <Contact />
