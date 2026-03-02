@@ -37,37 +37,63 @@ export const EnergyTimelineInteractive = () => {
     return containerRef.current.clientWidth / VISIBLE_HOURS;
   }, []);
 
-  // Resolve overlaps by pushing neighbors away from the dragged block
+  // Reflow: dragged block is placed freely, all others fill remaining gaps in their original order
   const resolveOverlaps = useCallback((arr: EnergyBlock[], movedId: string): EnergyBlock[] => {
-    const sorted = [...arr].sort((a, b) => a.startHour - b.startHour);
-    const movedIdx = sorted.findIndex(b => b.id === movedId);
-    if (movedIdx === -1) return sorted;
+    const moved = arr.find(b => b.id === movedId);
+    if (!moved) return arr;
 
-    // Push right neighbors
-    for (let i = movedIdx + 1; i < sorted.length; i++) {
-      const prev = sorted[i - 1];
-      const curr = sorted[i];
-      const minStart = prev.endHour + MIN_GAP;
-      if (curr.startHour < minStart) {
-        const duration = curr.endHour - curr.startHour;
-        const newStart = Math.min(minStart, END_HOUR - duration);
-        sorted[i] = { ...curr, startHour: newStart, endHour: newStart + duration };
+    // Other blocks sorted by their original order in initialBlocks
+    const others = arr
+      .filter(b => b.id !== movedId)
+      .sort((a, b) => {
+        const ai = initialBlocks.findIndex(ib => ib.id === a.id);
+        const bi = initialBlocks.findIndex(ib => ib.id === b.id);
+        return ai - bi;
+      });
+
+    // Place others around the moved block, maintaining relative order
+    // Collect free slots (before and after the moved block)
+    const movedStart = moved.startHour;
+    const movedEnd = moved.endHour;
+
+    // Split others into those that should go before vs after the moved block (by their center)
+    const before: EnergyBlock[] = [];
+    const after: EnergyBlock[] = [];
+    const movedCenter = (movedStart + movedEnd) / 2;
+
+    for (const b of others) {
+      const dur = b.endHour - b.startHour;
+      const origCenter = (b.startHour + b.endHour) / 2;
+      // If original center is left of moved center, try to place before
+      if (origCenter < movedCenter) {
+        before.push({ ...b, endHour: b.startHour + dur });
+      } else {
+        after.push({ ...b, endHour: b.startHour + dur });
       }
     }
 
-    // Push left neighbors
-    for (let i = movedIdx - 1; i >= 0; i--) {
-      const next = sorted[i + 1];
-      const curr = sorted[i];
-      const duration = curr.endHour - curr.startHour;
-      const maxEnd = next.startHour - MIN_GAP;
-      if (curr.endHour > maxEnd) {
-        const newEnd = Math.max(maxEnd, START_HOUR + duration);
-        sorted[i] = { ...curr, startHour: newEnd - duration, endHour: newEnd };
-      }
+    // Pack 'before' blocks right-to-left ending at movedStart
+    const result: EnergyBlock[] = [moved];
+    let cursor = movedStart;
+    for (let i = before.length - 1; i >= 0; i--) {
+      const b = before[i];
+      const dur = b.endHour - b.startHour;
+      const end = cursor;
+      const start = Math.max(START_HOUR, end - dur);
+      result.push({ ...b, startHour: start, endHour: start + dur });
+      cursor = start;
     }
 
-    return sorted;
+    // Pack 'after' blocks left-to-right starting at movedEnd
+    cursor = movedEnd;
+    for (const b of after) {
+      const dur = b.endHour - b.startHour;
+      const start = Math.min(cursor, END_HOUR - dur);
+      result.push({ ...b, startHour: start, endHour: start + dur });
+      cursor = start + dur;
+    }
+
+    return result;
   }, []);
 
   const handlePointerDown = useCallback(
