@@ -38,14 +38,21 @@ export const EnergyTimelineInteractive = () => {
   }, []);
 
   // Reflow while preserving gaps: only resolve collisions, allow free reordering
-  const resolveOverlaps = useCallback((arr: EnergyBlock[]): EnergyBlock[] => {
-    const withDesired = arr
-      .map((b) => ({
-        ...b,
-        desiredStart: b.startHour,
-        duration: b.endHour - b.startHour,
-      }))
-      .sort((a, b) => a.desiredStart - b.desiredStart);
+  const resolveOverlaps = useCallback(
+    (arr: EnergyBlock[], movedId: string, dragDirection: number): EnergyBlock[] => {
+      const withDesired = arr
+        .map((b) => ({
+          ...b,
+          desiredStart: b.startHour,
+          duration: b.endHour - b.startHour,
+        }))
+        .sort((a, b) => {
+          const diff = a.desiredStart - b.desiredStart;
+          if (Math.abs(diff) > 0.001) return diff;
+          if (a.id === movedId && b.id !== movedId) return dragDirection < 0 ? -1 : 1;
+          if (b.id === movedId && a.id !== movedId) return dragDirection < 0 ? 1 : -1;
+          return 0;
+        });
 
     // Forward pass: keep desired starts when possible, push only on collision
     let cursor = START_HOUR;
@@ -109,7 +116,8 @@ export const EnergyTimelineInteractive = () => {
       const updated = blocks.map(b =>
         b.id === drag.id ? { ...b, startHour: newStart, endHour: newStart + duration } : b
       );
-      setBlocks(resolveOverlaps(updated));
+      const dragDirection = Math.sign(dHours);
+      setBlocks(resolveOverlaps(updated, drag.id, dragDirection));
     },
     [blocks, getHourWidth, resolveOverlaps]
   );
