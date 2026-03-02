@@ -145,7 +145,7 @@ export const FeaturesShowcase = () => {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mx-auto mb-16 max-w-3xl text-center"
+          className="mx-auto mb-16 max-w-5xl"
         >
           <h2 className="font-body text-2xl font-bold text-foreground md:text-3xl leading-tight">
             Planning with kids is{" "}
