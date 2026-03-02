@@ -45,9 +45,10 @@ export const EnergyTimelineInteractive = () => {
           ...b,
           desiredStart: b.startHour,
           duration: b.endHour - b.startHour,
+          desiredCenter: b.startHour + (b.endHour - b.startHour) / 2,
         }))
         .sort((a, b) => {
-          const diff = a.desiredStart - b.desiredStart;
+          const diff = a.desiredCenter - b.desiredCenter;
           if (Math.abs(diff) > 0.001) return diff;
           if (a.id === movedId && b.id !== movedId) return dragDirection < 0 ? -1 : 1;
           if (b.id === movedId && a.id !== movedId) return dragDirection < 0 ? 1 : -1;
@@ -86,7 +87,7 @@ export const EnergyTimelineInteractive = () => {
       }
     }
 
-    return forward.map(({ desiredStart, duration, ...rest }) => rest);
+    return forward.map(({ desiredStart, duration, desiredCenter, ...rest }) => rest);
   }, []);
 
   const handlePointerDown = useCallback(
