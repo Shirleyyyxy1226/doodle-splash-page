@@ -16,7 +16,8 @@ interface EnergyBlock {
 const START_HOUR = 7;
 const END_HOUR = 21;
 const VISIBLE_HOURS = END_HOUR - START_HOUR;
-const MIN_GAP = 0; // allow touching but no overlap
+const MIN_GAP = 0;
+const MIN_DURATION = 0.5; // minimum 30 minutes
 
 const initialBlocks: EnergyBlock[] = [
   { id: "high1", label: "High energy", startHour: 7.5, endHour: 9.5, color: "text-mint", bg: "bg-mint-light/60", borderColor: "border-mint/30", activeRing: "ring-mint/40" },
@@ -26,10 +27,18 @@ const initialBlocks: EnergyBlock[] = [
   { id: "moderate2", label: "Moderate", startHour: 18.5, endHour: 20, color: "text-sunny", bg: "bg-sunny-light/60", borderColor: "border-sunny/30", activeRing: "ring-sunny/40" },
 ];
 
+type DragMode = "move" | "resize-left" | "resize-right";
+
 export const EnergyTimelineInteractive = () => {
   const [blocks, setBlocks] = useState(initialBlocks);
   const [draggingId, setDraggingId] = useState<string | null>(null);
-  const dragRef = useRef<{ id: string; startX: number; origStart: number } | null>(null);
+  const dragRef = useRef<{
+    id: string;
+    startX: number;
+    origStart: number;
+    origEnd: number;
+    mode: DragMode;
+  } | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
   const getHourWidth = useCallback(() => {
@@ -37,7 +46,6 @@ export const EnergyTimelineInteractive = () => {
     return containerRef.current.clientWidth / VISIBLE_HOURS;
   }, []);
 
-  // Reflow while preserving gaps: only resolve collisions, allow free reordering
   const resolveOverlaps = useCallback(
     (arr: EnergyBlock[], movedId: string, dragDirection: number): EnergyBlock[] => {
       const moved = arr.find((b) => b.id === movedId);
@@ -51,11 +59,9 @@ export const EnergyTimelineInteractive = () => {
       let insertIndex = others.length;
 
       if (dragDirection > 0) {
-        // Moving right: swap once dragged RIGHT edge crosses neighbor LEFT edge
         const idx = others.findIndex((o) => moved.endHour <= o.startHour + EPS);
         insertIndex = idx === -1 ? others.length : idx;
       } else if (dragDirection < 0) {
-        // Moving left: swap once dragged LEFT edge crosses neighbor RIGHT edge
         const idx = others.findIndex((o) => moved.startHour < o.endHour - EPS);
         insertIndex = idx === -1 ? others.length : idx;
       } else {
@@ -75,7 +81,6 @@ export const EnergyTimelineInteractive = () => {
         duration: b.endHour - b.startHour,
       }));
 
-      // Forward pass: keep desired starts when possible, push only on collision
       let cursor = START_HOUR;
       const forward = withDesired.map((b) => {
         let start = Math.max(b.desiredStart, cursor);
@@ -91,14 +96,12 @@ export const EnergyTimelineInteractive = () => {
         return placed;
       });
 
-      // Backward pass: ensure no overlap after end clamping
       for (let i = forward.length - 2; i >= 0; i--) {
         const curr = forward[i];
         const next = forward[i + 1];
         const maxEnd = next.startHour - MIN_GAP;
         if (curr.endHour > maxEnd) {
-          const newEnd = maxEnd;
-          const newStart = Math.max(START_HOUR, newEnd - curr.duration);
+          const newStart = Math.max(START_HOUR, maxEnd - curr.duration);
           forward[i] = {
             ...curr,
             startHour: newStart,
@@ -113,11 +116,17 @@ export const EnergyTimelineInteractive = () => {
   );
 
   const handlePointerDown = useCallback(
-    (e: React.PointerEvent, block: EnergyBlock) => {
+    (e: React.PointerEvent, block: EnergyBlock, mode: DragMode) => {
       e.preventDefault();
       e.stopPropagation();
       (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
-      dragRef.current = { id: block.id, startX: e.clientX, origStart: block.startHour };
+      dragRef.current = {
+        id: block.id,
+        startX: e.clientX,
+        origStart: block.startHour,
+        origEnd: block.endHour,
+        mode,
+      };
       setDraggingId(block.id);
     },
     []
@@ -130,17 +139,36 @@ export const EnergyTimelineInteractive = () => {
       const hourWidth = getHourWidth();
       const dx = e.clientX - drag.startX;
       const dHours = dx / hourWidth;
-      const block = blocks.find(b => b.id === drag.id);
-      if (!block) return;
-      const duration = block.endHour - block.startHour;
-      let newStart = Math.round((drag.origStart + dHours) * 2) / 2;
-      newStart = Math.max(START_HOUR, Math.min(END_HOUR - duration, newStart));
 
-      const updated = blocks.map(b =>
-        b.id === drag.id ? { ...b, startHour: newStart, endHour: newStart + duration } : b
-      );
-      const dragDirection = Math.sign(dHours);
-      setBlocks(resolveOverlaps(updated, drag.id, dragDirection));
+      if (drag.mode === "move") {
+        const block = blocks.find((b) => b.id === drag.id);
+        if (!block) return;
+        const duration = block.endHour - block.startHour;
+        let newStart = Math.round((drag.origStart + dHours) * 2) / 2;
+        newStart = Math.max(START_HOUR, Math.min(END_HOUR - duration, newStart));
+
+        const updated = blocks.map((b) =>
+          b.id === drag.id ? { ...b, startHour: newStart, endHour: newStart + duration } : b
+        );
+        const dragDirection = Math.sign(dHours);
+        setBlocks(resolveOverlaps(updated, drag.id, dragDirection));
+      } else if (drag.mode === "resize-left") {
+        let newStart = Math.round((drag.origStart + dHours) * 2) / 2;
+        newStart = Math.max(START_HOUR, Math.min(drag.origEnd - MIN_DURATION, newStart));
+        setBlocks((prev) =>
+          prev.map((b) =>
+            b.id === drag.id ? { ...b, startHour: newStart } : b
+          )
+        );
+      } else if (drag.mode === "resize-right") {
+        let newEnd = Math.round((drag.origEnd + dHours) * 2) / 2;
+        newEnd = Math.max(drag.origStart + MIN_DURATION, Math.min(END_HOUR, newEnd));
+        setBlocks((prev) =>
+          prev.map((b) =>
+            b.id === drag.id ? { ...b, endHour: newEnd } : b
+          )
+        );
+      }
     },
     [blocks, getHourWidth, resolveOverlaps]
   );
@@ -172,7 +200,7 @@ export const EnergyTimelineInteractive = () => {
                 Try it! Drag to adjust the energy rhythm
               </h4>
               <p className="text-xs text-muted-foreground">
-                Slide each block to match your child's day
+                Slide to move · Drag edges to resize
               </p>
             </div>
           </div>
@@ -217,19 +245,38 @@ export const EnergyTimelineInteractive = () => {
               const widthPct = ((block.endHour - block.startHour) / VISIBLE_HOURS) * 100;
               const isDragging = draggingId === block.id;
               return (
-                <motion.div
+                <div
                   key={block.id}
-                  className={`absolute top-2 bottom-2 rounded-xl ${block.bg} border ${block.borderColor} flex items-center justify-center gap-1 cursor-grab active:cursor-grabbing select-none touch-none transition-shadow ${isDragging ? `ring-2 ${block.activeRing} shadow-lifted z-20` : "z-10 hover:shadow-soft"}`}
+                  className={`absolute top-2 bottom-2 rounded-xl ${block.bg} border ${block.borderColor} flex items-center select-none touch-none transition-shadow ${isDragging ? `ring-2 ${block.activeRing} shadow-lifted z-20` : "z-10 hover:shadow-soft"}`}
                   style={{ left: `${leftPct}%`, width: `${widthPct}%` }}
-                  onPointerDown={(e) => handlePointerDown(e, block)}
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
                 >
-                  <GripVertical className="h-3 w-3 text-muted-foreground/40 shrink-0" />
-                  <span className={`text-xs font-bold ${block.color} truncate`}>
-                    {block.label}
-                  </span>
-                </motion.div>
+                  {/* Left resize handle */}
+                  <div
+                    className="absolute left-0 top-0 bottom-0 w-2 cursor-col-resize z-30 flex items-center justify-center group"
+                    onPointerDown={(e) => handlePointerDown(e, block, "resize-left")}
+                  >
+                    <div className="w-0.5 h-4 rounded-full bg-muted-foreground/20 group-hover:bg-muted-foreground/50 transition-colors" />
+                  </div>
+
+                  {/* Main drag area */}
+                  <div
+                    className="flex-1 flex items-center justify-center gap-1 cursor-grab active:cursor-grabbing min-w-0 px-3"
+                    onPointerDown={(e) => handlePointerDown(e, block, "move")}
+                  >
+                    <GripVertical className="h-3 w-3 text-muted-foreground/40 shrink-0" />
+                    <span className={`text-xs font-bold ${block.color} truncate`}>
+                      {block.label}
+                    </span>
+                  </div>
+
+                  {/* Right resize handle */}
+                  <div
+                    className="absolute right-0 top-0 bottom-0 w-2 cursor-col-resize z-30 flex items-center justify-center group"
+                    onPointerDown={(e) => handlePointerDown(e, block, "resize-right")}
+                  >
+                    <div className="w-0.5 h-4 rounded-full bg-muted-foreground/20 group-hover:bg-muted-foreground/50 transition-colors" />
+                  </div>
+                </div>
               );
             })}
           </div>
