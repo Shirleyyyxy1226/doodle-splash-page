@@ -1,26 +1,12 @@
-import { useState, useRef, useCallback } from "react";
-import { Baby, Sun, Moon, GripVertical } from "lucide-react";
+import { Baby, Sun, Moon } from "lucide-react";
 
-interface EnergyBlock {
-  id: string;
-  label: string;
-  startHour: number; // 0-24 in hours
-  endHour: number;
-  color: string;
-  bg: string;
-  borderColor: string;
-}
-
-const START_HOUR = 9;
-const END_HOUR = 21;
-
-const initialBlocks: EnergyBlock[] = [
-  { id: "moderate1", label: "Moderate", startHour: 9, endHour: 11, color: "text-sunny", bg: "bg-sunny-light/60", borderColor: "border-sunny/30" },
-  { id: "high", label: "High energy", startHour: 11, endHour: 13, color: "text-mint", bg: "bg-mint-light/60", borderColor: "border-mint/30" },
-  { id: "nap", label: "Nap", startHour: 13, endHour: 15, color: "text-sky", bg: "bg-sky-light/60", borderColor: "border-sky/30" },
-  { id: "low", label: "Low energy", startHour: 15, endHour: 17, color: "text-lavender", bg: "bg-lavender-light/60", borderColor: "border-lavender/30" },
-  { id: "moderate2", label: "Moderate", startHour: 17, endHour: 19, color: "text-sunny", bg: "bg-sunny-light/60", borderColor: "border-sunny/30" },
-  { id: "low2", label: "Low energy", startHour: 19, endHour: 21, color: "text-lavender", bg: "bg-lavender-light/60", borderColor: "border-lavender/30" },
+const energyBlocks = [
+  { label: "Moderate", time: "9–11 AM", color: "text-sunny", bg: "bg-sunny-light/60", borderColor: "border-sunny/30" },
+  { label: "High energy", time: "11 AM–1 PM", color: "text-mint", bg: "bg-mint-light/60", borderColor: "border-mint/30" },
+  { label: "Nap", time: "1–3 PM", color: "text-sky", bg: "bg-sky-light/60", borderColor: "border-sky/30" },
+  { label: "Low energy", time: "3–5 PM", color: "text-lavender", bg: "bg-lavender-light/60", borderColor: "border-lavender/30" },
+  { label: "Moderate", time: "5–7 PM", color: "text-sunny", bg: "bg-sunny-light/60", borderColor: "border-sunny/30" },
+  { label: "Low energy", time: "7–9 PM", color: "text-lavender", bg: "bg-lavender-light/60", borderColor: "border-lavender/30" },
 ];
 
 const legendItems = [
@@ -30,41 +16,7 @@ const legendItems = [
   { label: "Nap", dotClass: "bg-sky" },
 ];
 
-const VISIBLE_HOURS = END_HOUR - START_HOUR; // 12
-const HOUR_WIDTH = 20; // px per hour
-
 export const RoutineMockup = () => {
-  const [blocks, setBlocks] = useState(initialBlocks);
-  const [dragging, setDragging] = useState<{ id: string; startX: number; origStart: number; origEnd: number } | null>(null);
-  const timelineRef = useRef<HTMLDivElement>(null);
-
-  const viewportWidth = VISIBLE_HOURS * HOUR_WIDTH;
-
-  const handleBlockPointerDown = useCallback((e: React.PointerEvent, block: EnergyBlock) => {
-    e.preventDefault();
-    e.stopPropagation();
-    const target = e.currentTarget as HTMLElement;
-    target.setPointerCapture(e.pointerId);
-    setDragging({ id: block.id, startX: e.clientX, origStart: block.startHour, origEnd: block.endHour });
-  }, []);
-
-  const handlePointerMove = useCallback((e: React.PointerEvent) => {
-    if (!dragging) return;
-    const dx = e.clientX - dragging.startX;
-    const dHours = dx / HOUR_WIDTH;
-    const duration = dragging.origEnd - dragging.origStart;
-    let newStart = Math.round((dragging.origStart + dHours) * 2) / 2; // snap to 30min
-    newStart = Math.max(START_HOUR, Math.min(END_HOUR - duration, newStart));
-    setBlocks(prev => prev.map(b => b.id === dragging.id ? { ...b, startHour: newStart, endHour: newStart + duration } : b));
-  }, [dragging]);
-
-  const handlePointerUp = useCallback(() => {
-    setDragging(null);
-  }, []);
-
-  // Timeline hours
-  const hours = Array.from({ length: VISIBLE_HOURS + 1 }, (_, i) => START_HOUR + i);
-
   return (
     <div className="rounded-2xl border border-border bg-card shadow-card overflow-hidden">
       {/* Header */}
@@ -99,10 +51,9 @@ export const RoutineMockup = () => {
         })}
       </div>
 
-      {/* Energy Rhythm Section */}
+      {/* Energy Rhythm */}
       <div className="px-3 pt-3 pb-1">
         <p className="text-[9px] font-bold text-foreground mb-0.5 uppercase tracking-wider">Daily Energy Rhythm</p>
-        <p className="text-[7px] text-muted-foreground mb-2">Drag blocks to adjust your child's energy pattern.</p>
 
         {/* Legend */}
         <div className="flex gap-1.5 mb-2 flex-wrap">
@@ -114,55 +65,21 @@ export const RoutineMockup = () => {
           ))}
         </div>
 
-        {/* Timeline */}
-        <div className="relative rounded-lg border border-border bg-muted/20 overflow-hidden">
-          {/* Time labels */}
-          <div className="flex border-b border-border" style={{ width: viewportWidth }}>
-            {hours.slice(0, VISIBLE_HOURS).map(h => (
-              <div key={h} className="text-[7px] text-muted-foreground text-center py-1" style={{ width: HOUR_WIDTH }}>
-                {h === 0 ? '12 AM' : h <= 12 ? `${h}${h === 12 ? ' PM' : ' AM'}` : `${h - 12} PM`}
-              </div>
-            ))}
-          </div>
-
-          {/* Blocks area */}
-          <div
-            ref={timelineRef}
-            className="relative h-12 select-none touch-none"
-            style={{ width: viewportWidth }}
-            onPointerMove={handlePointerMove}
-            onPointerUp={handlePointerUp}
-          >
-            {/* Grid lines */}
-            {hours.slice(0, VISIBLE_HOURS).map((h, i) => (
-              <div
-                key={h}
-                className="absolute top-0 bottom-0 border-l border-border/40"
-                style={{ left: i * HOUR_WIDTH }}
-              />
-            ))}
-
-            {/* Energy blocks */}
-            {blocks.map(block => {
-              const left = (block.startHour - START_HOUR) * HOUR_WIDTH;
-              const width = (block.endHour - block.startHour) * HOUR_WIDTH;
-              return (
-                <div
-                  key={block.id}
-                  className={`absolute top-1.5 bottom-1.5 rounded-md ${block.bg} border ${block.borderColor} flex items-center justify-center gap-0.5 cursor-grab active:cursor-grabbing transition-colors ${dragging?.id === block.id ? 'ring-1 ring-foreground/20 shadow-soft' : ''}`}
-                  style={{ left, width }}
-                  onPointerDown={(e) => handleBlockPointerDown(e, block)}
-                >
-                  <GripVertical className="h-2 w-2 text-muted-foreground/50" />
-                  <span className={`text-[7px] font-bold ${block.color} truncate`}>{block.label}</span>
-                </div>
-              );
-            })}
-          </div>
+        {/* Static energy blocks */}
+        <div className="grid grid-cols-3 gap-1">
+          {energyBlocks.map((block, i) => (
+            <div
+              key={i}
+              className={`rounded-lg ${block.bg} border ${block.borderColor} p-1.5 text-center`}
+            >
+              <span className={`text-[7px] font-bold ${block.color} block`}>{block.label}</span>
+              <span className="text-[6px] text-muted-foreground">{block.time}</span>
+            </div>
+          ))}
         </div>
       </div>
 
-      {/* Meals & Nap summary */}
+      {/* Meals */}
       <div className="px-3 pt-2 pb-1">
         <p className="text-[9px] font-bold text-foreground mb-1 uppercase tracking-wider">Meals</p>
         <div className="space-y-0.5 mb-2">
