@@ -122,7 +122,7 @@ const PainPointCard = ({ point, index }: { point: PainPoint; index: number }) =>
             animate={{ opacity: hovered ? 1 : 0, scale: hovered ? 1 : 1.05 }}
             transition={{ duration: 0.3, delay: 0.05 }}
           >
-            <span className="font-body text-lg md:text-xl font-bold text-card mb-3">
+            <span className="font-handwriting text-2xl md:text-3xl text-card mb-3">
               See how we solve this
             </span>
             <ArrowDown className="h-5 w-5 text-card animate-bounce" />
