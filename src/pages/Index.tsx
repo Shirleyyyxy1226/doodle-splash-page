@@ -15,8 +15,8 @@ const Index = () => {
       <main>
         <Hero />
         <VideoShowcase />
-        <JourneyShowcase />
         <FeaturesShowcase />
+        <JourneyShowcase />
         <Explore />
         <CallToAction />
         <Contact />

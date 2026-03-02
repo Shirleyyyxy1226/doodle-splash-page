@@ -2,7 +2,6 @@ import { motion } from "framer-motion";
 import { RoutineMockup } from "./journey/RoutineMockup";
 import { ItineraryMockup } from "./journey/ItineraryMockup";
 import { LivePlanMockup } from "./journey/LivePlanMockup";
-import { EnergyTimelineInteractive } from "./journey/EnergyTimelineInteractive";
 
 const steps = [
   {
@@ -154,8 +153,6 @@ export const JourneyShowcase = () => {
                   </div>
                 </motion.div>
 
-                {/* Interactive energy timeline after Step 1 */}
-                {step.step === "1" && <EnergyTimelineInteractive />}
               </div>
             );
           })}
