@@ -37,63 +37,49 @@ export const EnergyTimelineInteractive = () => {
     return containerRef.current.clientWidth / VISIBLE_HOURS;
   }, []);
 
-  // Reflow: dragged block is placed freely, all others fill remaining gaps in their original order
-  const resolveOverlaps = useCallback((arr: EnergyBlock[], movedId: string): EnergyBlock[] => {
-    const moved = arr.find(b => b.id === movedId);
-    if (!moved) return arr;
+  // Reflow while preserving gaps: only resolve collisions, allow free reordering
+  const resolveOverlaps = useCallback((arr: EnergyBlock[]): EnergyBlock[] => {
+    const withDesired = arr
+      .map((b) => ({
+        ...b,
+        desiredStart: b.startHour,
+        duration: b.endHour - b.startHour,
+      }))
+      .sort((a, b) => a.desiredStart - b.desiredStart);
 
-    // Other blocks sorted by their original order in initialBlocks
-    const others = arr
-      .filter(b => b.id !== movedId)
-      .sort((a, b) => {
-        const ai = initialBlocks.findIndex(ib => ib.id === a.id);
-        const bi = initialBlocks.findIndex(ib => ib.id === b.id);
-        return ai - bi;
-      });
+    // Forward pass: keep desired starts when possible, push only on collision
+    let cursor = START_HOUR;
+    const forward = withDesired.map((b) => {
+      let start = Math.max(b.desiredStart, cursor);
+      if (start + b.duration > END_HOUR) {
+        start = END_HOUR - b.duration;
+      }
+      const placed = {
+        ...b,
+        startHour: start,
+        endHour: start + b.duration,
+      };
+      cursor = placed.endHour + MIN_GAP;
+      return placed;
+    });
 
-    // Place others around the moved block, maintaining relative order
-    // Collect free slots (before and after the moved block)
-    const movedStart = moved.startHour;
-    const movedEnd = moved.endHour;
-
-    // Split others into those that should go before vs after the moved block (by their center)
-    const before: EnergyBlock[] = [];
-    const after: EnergyBlock[] = [];
-    const movedCenter = (movedStart + movedEnd) / 2;
-
-    for (const b of others) {
-      const dur = b.endHour - b.startHour;
-      const origCenter = (b.startHour + b.endHour) / 2;
-      // If original center is left of moved center, try to place before
-      if (origCenter < movedCenter) {
-        before.push({ ...b, endHour: b.startHour + dur });
-      } else {
-        after.push({ ...b, endHour: b.startHour + dur });
+    // Backward pass: ensure no overlap after end clamping
+    for (let i = forward.length - 2; i >= 0; i--) {
+      const curr = forward[i];
+      const next = forward[i + 1];
+      const maxEnd = next.startHour - MIN_GAP;
+      if (curr.endHour > maxEnd) {
+        const newEnd = maxEnd;
+        const newStart = Math.max(START_HOUR, newEnd - curr.duration);
+        forward[i] = {
+          ...curr,
+          startHour: newStart,
+          endHour: newStart + curr.duration,
+        };
       }
     }
 
-    // Pack 'before' blocks right-to-left ending at movedStart
-    const result: EnergyBlock[] = [moved];
-    let cursor = movedStart;
-    for (let i = before.length - 1; i >= 0; i--) {
-      const b = before[i];
-      const dur = b.endHour - b.startHour;
-      const end = cursor;
-      const start = Math.max(START_HOUR, end - dur);
-      result.push({ ...b, startHour: start, endHour: start + dur });
-      cursor = start;
-    }
-
-    // Pack 'after' blocks left-to-right starting at movedEnd
-    cursor = movedEnd;
-    for (const b of after) {
-      const dur = b.endHour - b.startHour;
-      const start = Math.min(cursor, END_HOUR - dur);
-      result.push({ ...b, startHour: start, endHour: start + dur });
-      cursor = start + dur;
-    }
-
-    return result;
+    return forward.map(({ desiredStart, duration, ...rest }) => rest);
   }, []);
 
   const handlePointerDown = useCallback(
@@ -123,7 +109,7 @@ export const EnergyTimelineInteractive = () => {
       const updated = blocks.map(b =>
         b.id === drag.id ? { ...b, startHour: newStart, endHour: newStart + duration } : b
       );
-      setBlocks(resolveOverlaps(updated, drag.id));
+      setBlocks(resolveOverlaps(updated));
     },
     [blocks, getHourWidth, resolveOverlaps]
   );
