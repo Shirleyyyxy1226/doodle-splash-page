@@ -22,17 +22,13 @@ const DragHintAnimation = () => (
 );
 
 interface PainPoint {
-  emoji: string;
   title: string;
-  description: string;
   highlights: { text: string; isNumber: boolean }[];
 }
 
 const painPoints: PainPoint[] = [
   {
-    emoji: "🔥",
     title: "Endless Tabs",
-    description: "",
     highlights: [
       { text: "Juggling ", isNumber: false },
       { text: "8", isNumber: true },
@@ -44,9 +40,7 @@ const painPoints: PainPoint[] = [
     ],
   },
   {
-    emoji: "🪫",
     title: "0% Toddler Battery",
-    description: "",
     highlights: [
       { text: "Watching a meticulously planned ", isNumber: false },
       { text: "12-hour", isNumber: true },
@@ -58,9 +52,7 @@ const painPoints: PainPoint[] = [
     ],
   },
   {
-    emoji: "🧳",
     title: "Packing Chaos",
-    description: "",
     highlights: [
       { text: "Checking off a ", isNumber: false },
       { text: "50-item", isNumber: true },
@@ -101,43 +93,39 @@ const PainPointCard = ({ point, index }: { point: PainPoint; index: number }) =>
           transition={{ duration: 0.4 }}
         />
 
-        <div className="relative z-10">
-          <span className="text-3xl mb-4 block">{point.emoji}</span>
-          <h3 className={`font-body text-xl md:text-2xl font-bold mb-3 transition-colors duration-400 ${
-            hovered ? "text-card" : "text-foreground"
-          }`}>
-            {point.title}
-          </h3>
-          <p className={`font-body text-sm md:text-base leading-relaxed transition-colors duration-400 ${
-            hovered ? "text-card/90" : "text-muted-foreground"
-          }`}>
-            {point.highlights.map((h, i) =>
-              h.isNumber ? (
-                <span
-                  key={i}
-                  className={`font-bold text-lg md:text-xl transition-colors duration-400 ${
-                    hovered ? "text-card" : "text-coral"
-                  }`}
-                >
-                  {h.text}
-                </span>
-              ) : (
-                <span key={i}>{h.text}</span>
-              )
-            )}
-          </p>
-
-          {/* Hover CTA */}
+        <div className="relative z-10 flex flex-col justify-center min-h-[180px]">
+          {/* Default content - hidden on hover */}
           <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: hovered ? 1 : 0, y: hovered ? 0 : 10 }}
-            transition={{ duration: 0.3, delay: 0.1 }}
-            className="mt-6 flex items-center gap-2"
+            animate={{ opacity: hovered ? 0 : 1, scale: hovered ? 0.95 : 1 }}
+            transition={{ duration: 0.3 }}
           >
-            <span className="font-body text-sm font-semibold text-card">
+            <h3 className="font-body text-xl md:text-2xl font-bold mb-3 text-foreground">
+              {point.title}
+            </h3>
+            <p className="font-body text-sm md:text-base leading-relaxed text-muted-foreground">
+              {point.highlights.map((h, i) =>
+                h.isNumber ? (
+                  <span key={i} className="font-bold text-lg md:text-xl text-coral">
+                    {h.text}
+                  </span>
+                ) : (
+                  <span key={i}>{h.text}</span>
+                )
+              )}
+            </p>
+          </motion.div>
+
+          {/* Hover content - only "See how we solve this" */}
+          <motion.div
+            className="absolute inset-0 flex flex-col items-center justify-center"
+            initial={{ opacity: 0, scale: 1.05 }}
+            animate={{ opacity: hovered ? 1 : 0, scale: hovered ? 1 : 1.05 }}
+            transition={{ duration: 0.3, delay: 0.05 }}
+          >
+            <span className="font-body text-lg md:text-xl font-bold text-card mb-3">
               See how we solve this
             </span>
-            <ArrowDown className="h-4 w-4 text-card animate-bounce-soft" />
+            <ArrowDown className="h-5 w-5 text-card animate-bounce" />
           </motion.div>
         </div>
       </motion.div>
