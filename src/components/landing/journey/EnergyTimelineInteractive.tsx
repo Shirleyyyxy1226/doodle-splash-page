@@ -40,63 +40,77 @@ export const EnergyTimelineInteractive = () => {
   // Reflow while preserving gaps: only resolve collisions, allow free reordering
   const resolveOverlaps = useCallback(
     (arr: EnergyBlock[], movedId: string, dragDirection: number): EnergyBlock[] => {
-      const withDesired = arr
-        .map((b) => ({
-          ...b,
-          desiredStart: b.startHour,
-          duration: b.endHour - b.startHour,
-          desiredCenter: b.startHour + (b.endHour - b.startHour) / 2,
-        }))
-        .sort((a, b) => {
-          // Edge-crossing swap: swap as soon as dragged edge crosses neighbor edge
-          if (a.id === movedId && b.id !== movedId) {
-            if (dragDirection > 0) return a.endHour > b.startHour ? 1 : -1;
-            if (dragDirection < 0) return a.startHour < b.endHour ? -1 : 1;
-          }
-          if (b.id === movedId && a.id !== movedId) {
-            if (dragDirection > 0) return b.endHour > a.startHour ? -1 : 1;
-            if (dragDirection < 0) return b.startHour < a.endHour ? 1 : -1;
-          }
+      const moved = arr.find((b) => b.id === movedId);
+      if (!moved) return arr;
 
-          const diff = a.desiredCenter - b.desiredCenter;
-          if (Math.abs(diff) > 0.001) return diff;
-          return 0;
-        });
+      const others = arr
+        .filter((b) => b.id !== movedId)
+        .sort((a, b) => a.startHour - b.startHour);
 
-    // Forward pass: keep desired starts when possible, push only on collision
-    let cursor = START_HOUR;
-    const forward = withDesired.map((b) => {
-      let start = Math.max(b.desiredStart, cursor);
-      if (start + b.duration > END_HOUR) {
-        start = END_HOUR - b.duration;
+      const EPS = 0.001;
+      let insertIndex = others.length;
+
+      if (dragDirection > 0) {
+        // Moving right: swap once dragged RIGHT edge crosses neighbor LEFT edge
+        const idx = others.findIndex((o) => moved.endHour <= o.startHour + EPS);
+        insertIndex = idx === -1 ? others.length : idx;
+      } else if (dragDirection < 0) {
+        // Moving left: swap once dragged LEFT edge crosses neighbor RIGHT edge
+        const idx = others.findIndex((o) => moved.startHour < o.endHour - EPS);
+        insertIndex = idx === -1 ? others.length : idx;
+      } else {
+        const idx = others.findIndex((o) => moved.startHour < o.startHour);
+        insertIndex = idx === -1 ? others.length : idx;
       }
-      const placed = {
+
+      const ordered = [
+        ...others.slice(0, insertIndex),
+        moved,
+        ...others.slice(insertIndex),
+      ];
+
+      const withDesired = ordered.map((b) => ({
         ...b,
-        startHour: start,
-        endHour: start + b.duration,
-      };
-      cursor = placed.endHour + MIN_GAP;
-      return placed;
-    });
+        desiredStart: b.startHour,
+        duration: b.endHour - b.startHour,
+      }));
 
-    // Backward pass: ensure no overlap after end clamping
-    for (let i = forward.length - 2; i >= 0; i--) {
-      const curr = forward[i];
-      const next = forward[i + 1];
-      const maxEnd = next.startHour - MIN_GAP;
-      if (curr.endHour > maxEnd) {
-        const newEnd = maxEnd;
-        const newStart = Math.max(START_HOUR, newEnd - curr.duration);
-        forward[i] = {
-          ...curr,
-          startHour: newStart,
-          endHour: newStart + curr.duration,
+      // Forward pass: keep desired starts when possible, push only on collision
+      let cursor = START_HOUR;
+      const forward = withDesired.map((b) => {
+        let start = Math.max(b.desiredStart, cursor);
+        if (start + b.duration > END_HOUR) {
+          start = END_HOUR - b.duration;
+        }
+        const placed = {
+          ...b,
+          startHour: start,
+          endHour: start + b.duration,
         };
-      }
-    }
+        cursor = placed.endHour + MIN_GAP;
+        return placed;
+      });
 
-    return forward.map(({ desiredStart, duration, desiredCenter, ...rest }) => rest);
-  }, []);
+      // Backward pass: ensure no overlap after end clamping
+      for (let i = forward.length - 2; i >= 0; i--) {
+        const curr = forward[i];
+        const next = forward[i + 1];
+        const maxEnd = next.startHour - MIN_GAP;
+        if (curr.endHour > maxEnd) {
+          const newEnd = maxEnd;
+          const newStart = Math.max(START_HOUR, newEnd - curr.duration);
+          forward[i] = {
+            ...curr,
+            startHour: newStart,
+            endHour: newStart + curr.duration,
+          };
+        }
+      }
+
+      return forward.map(({ desiredStart, duration, ...rest }) => rest);
+    },
+    []
+  );
 
   const handlePointerDown = useCallback(
     (e: React.PointerEvent, block: EnergyBlock) => {
