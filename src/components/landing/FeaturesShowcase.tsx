@@ -1,83 +1,7 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { EnergyTimelineInteractive } from "./journey/EnergyTimelineInteractive";
-import { PlaceReviewMockup } from "./journey/PlaceReviewMockup";
-import { HotelOptionsMockup } from "./journey/HotelOptionsMockup";
-import { TipsMockup } from "./journey/TipsMockup";
-import { QuickAdjustmentsMockup } from "./journey/QuickAdjustmentsMockup";
-import { PackingListMockup } from "./journey/PackingListMockup";
-import { MapPin, Hotel, Lightbulb, Settings, Luggage, Hand, MousePointerClick } from "lucide-react";
-
-interface Feature {
-  icon: typeof MapPin;
-  tag: string;
-  tagColor: string;
-  tagBg: string;
-  accentGradient: string;
-  title: string;
-  description: string;
-  Mockup: React.ComponentType;
-  interactive?: boolean;
-}
-
-const features: Feature[] = [
-  {
-    icon: MapPin,
-    tag: "Trusted Places",
-    tagColor: "text-coral",
-    tagBg: "bg-coral-light",
-    accentGradient: "from-coral/5 to-transparent",
-    title: "Places parents actually trust",
-    description:
-      "Every recommendation comes with real parent reviews, kid-specific tags, and tips from families who've been there with toddlers.",
-    Mockup: PlaceReviewMockup,
-  },
-  {
-    icon: Hotel,
-    tag: "Stays & Dining",
-    tagColor: "text-sky",
-    tagBg: "bg-sky-light",
-    accentGradient: "from-sky/5 to-transparent",
-    title: "Kid-friendly stays & dining",
-    description:
-      "Hotels with cribs, restaurants with highchairs — filtered by what actually matters when you travel with little ones.",
-    Mockup: HotelOptionsMockup,
-  },
-  {
-    icon: Lightbulb,
-    tag: "Smart Tips",
-    tagColor: "text-sunny",
-    tagBg: "bg-sunny-light",
-    accentGradient: "from-sunny/5 to-transparent",
-    title: "Tips that think one step ahead",
-    description:
-      "We tell you what to watch out for, why we planned it this way, and what other parents wish they'd known.",
-    Mockup: TipsMockup,
-  },
-  {
-    icon: Settings,
-    tag: "One-tap Adjust",
-    tagColor: "text-mint",
-    tagBg: "bg-mint-light",
-    accentGradient: "from-mint/5 to-transparent",
-    title: "Change your plan in one tap",
-    description:
-      "Too much walking? Need more rest? Tap once and the entire plan reshuffles — always with more options to explore.",
-    Mockup: QuickAdjustmentsMockup,
-    interactive: true,
-  },
-  {
-    icon: Luggage,
-    tag: "Packing",
-    tagColor: "text-lavender",
-    tagBg: "bg-lavender-light",
-    accentGradient: "from-lavender/5 to-transparent",
-    title: "Pack smart, forget nothing",
-    description:
-      "Weather-aware packing lists customized for your destination, with kid essentials sorted by category.",
-    Mockup: PackingListMockup,
-    interactive: true,
-  },
-];
+import { Hand, ArrowDown } from "lucide-react";
 
 const DragHintAnimation = () => (
   <motion.div
@@ -97,32 +21,136 @@ const DragHintAnimation = () => (
   </motion.div>
 );
 
-const TapHintAnimation = () => (
-  <motion.div
-    className="flex items-center gap-2 text-muted-foreground mt-3"
-    initial={{ opacity: 0 }}
-    whileInView={{ opacity: 1 }}
-    viewport={{ once: true }}
-    transition={{ delay: 0.5 }}
-  >
+interface PainPoint {
+  emoji: string;
+  title: string;
+  description: string;
+  highlights: { text: string; isNumber: boolean }[];
+}
+
+const painPoints: PainPoint[] = [
+  {
+    emoji: "🔥",
+    title: "Endless Tabs",
+    description: "",
+    highlights: [
+      { text: "Juggling ", isNumber: false },
+      { text: "8", isNumber: true },
+      { text: " different apps and reading ", isNumber: false },
+      { text: "200+", isNumber: true },
+      { text: " reviews over ", isNumber: false },
+      { text: "10 hours", isNumber: true },
+      { text: ", just to piece together one weekend trip.", isNumber: false },
+    ],
+  },
+  {
+    emoji: "🪫",
+    title: "0% Toddler Battery",
+    description: "",
+    highlights: [
+      { text: "Watching a meticulously planned ", isNumber: false },
+      { text: "12-hour", isNumber: true },
+      { text: " itinerary collapse in ", isNumber: false },
+      { text: "1 minute", isNumber: true },
+      { text: " because your kid's battery suddenly hit ", isNumber: false },
+      { text: "zero", isNumber: true },
+      { text: ".", isNumber: false },
+    ],
+  },
+  {
+    emoji: "🧳",
+    title: "Packing Chaos",
+    description: "",
+    highlights: [
+      { text: "Checking off a ", isNumber: false },
+      { text: "50-item", isNumber: true },
+      { text: " packing list and hauling ", isNumber: false },
+      { text: "3 heavy bags", isNumber: true },
+      { text: ", only to arrive and realize you forgot the ", isNumber: false },
+      { text: "1 essential", isNumber: true },
+      { text: " comfort toy.", isNumber: false },
+    ],
+  },
+];
+
+const PainPointCard = ({ point, index }: { point: PainPoint; index: number }) => {
+  const [hovered, setHovered] = useState(false);
+
+  return (
     <motion.div
-      animate={{ scale: [1, 1.08, 1] }}
-      transition={{ duration: 1.8, repeat: Infinity, repeatDelay: 1, ease: "easeInOut" }}
-      className="flex items-center gap-1 rounded-full border border-border bg-card px-3 py-1.5 shadow-soft"
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5, delay: index * 0.15 }}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      className="relative cursor-pointer group"
     >
-      <MousePointerClick className="h-3.5 w-3.5 text-mint" />
-      <span className="text-xs font-medium font-body">Tap to try</span>
+      <motion.div
+        className={`relative rounded-3xl p-8 md:p-10 transition-all duration-500 overflow-hidden ${
+          hovered
+            ? "text-card shadow-lifted"
+            : "border border-border bg-card shadow-card text-foreground"
+        }`}
+      >
+        {/* Gradient background on hover */}
+        <motion.div
+          className="absolute inset-0 bg-gradient-to-br from-coral via-sunny to-mint rounded-3xl"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: hovered ? 1 : 0 }}
+          transition={{ duration: 0.4 }}
+        />
+
+        <div className="relative z-10">
+          <span className="text-3xl mb-4 block">{point.emoji}</span>
+          <h3 className={`font-body text-xl md:text-2xl font-bold mb-3 transition-colors duration-400 ${
+            hovered ? "text-card" : "text-foreground"
+          }`}>
+            {point.title}
+          </h3>
+          <p className={`font-body text-sm md:text-base leading-relaxed transition-colors duration-400 ${
+            hovered ? "text-card/90" : "text-muted-foreground"
+          }`}>
+            {point.highlights.map((h, i) =>
+              h.isNumber ? (
+                <span
+                  key={i}
+                  className={`font-bold text-lg md:text-xl transition-colors duration-400 ${
+                    hovered ? "text-card" : "text-coral"
+                  }`}
+                >
+                  {h.text}
+                </span>
+              ) : (
+                <span key={i}>{h.text}</span>
+              )
+            )}
+          </p>
+
+          {/* Hover CTA */}
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: hovered ? 1 : 0, y: hovered ? 0 : 10 }}
+            transition={{ duration: 0.3, delay: 0.1 }}
+            className="mt-6 flex items-center gap-2"
+          >
+            <span className="font-body text-sm font-semibold text-card">
+              See how we solve this
+            </span>
+            <ArrowDown className="h-4 w-4 text-card animate-bounce-soft" />
+          </motion.div>
+        </div>
+      </motion.div>
     </motion.div>
-  </motion.div>
-);
+  );
+};
+
 export const FeaturesShowcase = () => {
   return (
     <section id="features" className="relative bg-background py-24 lg:py-32 overflow-visible">
-      {/* Subtle background decoration */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute -top-40 -right-40 w-80 h-80 rounded-full bg-coral/[0.03] blur-3xl" />
         <div className="absolute top-1/3 -left-40 w-96 h-96 rounded-full bg-sky/[0.03] blur-3xl" />
-        <div className="absolute bottom-20 right-10 w-72 h-72 rounded-full bg-mint/[0.03] blur-3xl" />
       </div>
 
       <div className="container mx-auto px-4 overflow-visible relative">
@@ -131,7 +159,7 @@ export const FeaturesShowcase = () => {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mx-auto mb-20 max-w-2xl text-center"
+          className="mx-auto mb-16 max-w-2xl text-center"
         >
           <motion.div
             initial={{ scale: 0.9, opacity: 0 }}
@@ -141,29 +169,34 @@ export const FeaturesShowcase = () => {
             className="mb-5 inline-flex items-center gap-2 rounded-full border border-border bg-card px-5 py-2.5 shadow-soft"
           >
             <div className="h-1.5 w-1.5 rounded-full bg-coral animate-[pulse_2s_ease-in-out_infinite]" />
-            <span className="font-body font-semibold text-foreground text-sm tracking-wide">Features</span>
+            <span className="font-body font-semibold text-foreground text-sm tracking-wide">Sound Familiar?</span>
           </motion.div>
           <h2 className="mb-5 font-body text-4xl font-bold text-foreground md:text-5xl leading-tight">
-            Everything you need,{" "}
-            <span className="text-gradient-coral">built for kids</span>
+            Family trips shouldn't feel like{" "}
+            <span className="text-gradient-coral">a second job</span>
           </h2>
           <p className="font-body text-lg text-muted-foreground leading-relaxed">
-            From personalized routines to real parent reviews — every detail is designed around your child.
+            If any of these hit close to home, you're not alone.
           </p>
         </motion.div>
 
-        {/* Energy Timeline - hero feature with premium card */}
+        {/* Pain point cards */}
+        <div className="mx-auto max-w-5xl grid grid-cols-1 md:grid-cols-3 gap-6 mb-24 lg:mb-32">
+          {painPoints.map((point, i) => (
+            <PainPointCard key={point.title} point={point} index={i} />
+          ))}
+        </div>
+
+        {/* Energy Timeline - hero feature */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="mx-auto max-w-4xl mb-24 lg:mb-32"
+          className="mx-auto max-w-4xl"
         >
           <div className="relative rounded-[2rem] border border-border bg-card p-8 md:p-12 shadow-card overflow-hidden">
-            {/* Decorative gradient top bar */}
             <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-coral via-sunny to-mint" />
-            
             <div className="flex flex-col md:flex-row md:items-start gap-6 mb-8">
               <div className="flex-1">
                 <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-coral-light px-3 py-1.5">
@@ -185,57 +218,6 @@ export const FeaturesShowcase = () => {
             <EnergyTimelineInteractive />
           </div>
         </motion.div>
-
-        {/* Feature cards - premium alternating layout */}
-        <div className="mx-auto max-w-5xl space-y-16 lg:space-y-24 overflow-visible">
-          {features.map((feature, i) => {
-            const isEven = i % 2 === 0;
-            const Icon = feature.icon;
-            return (
-              <motion.div
-                key={feature.tag}
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-60px" }}
-                transition={{ duration: 0.5, delay: 0.1 }}
-                className={`relative flex flex-col items-center gap-10 lg:gap-16 lg:flex-row ${
-                  isEven ? "" : "lg:flex-row-reverse"
-                }`}
-              >
-                {/* Text side */}
-                <div className="flex-1 text-center lg:text-left">
-                  <div className={`mb-4 inline-flex items-center gap-2.5 rounded-full ${feature.tagBg} px-4 py-2`}>
-                    <Icon className={`h-4 w-4 ${feature.tagColor}`} />
-                    <span className={`text-xs font-bold ${feature.tagColor} uppercase tracking-wider font-body`}>
-                      {feature.tag}
-                    </span>
-                  </div>
-                  <h3 className="mb-4 font-body text-2xl font-bold text-foreground md:text-3xl leading-tight">
-                    {feature.title}
-                  </h3>
-                  <p className="font-body text-base text-muted-foreground leading-relaxed max-w-md mx-auto lg:mx-0">
-                    {feature.description}
-                  </p>
-                </div>
-
-                {/* Mockup side with premium frame */}
-                <div className="w-full max-w-[300px] flex-shrink-0">
-                  <motion.div
-                    whileHover={{ y: -6, transition: { duration: 0.25, ease: "easeOut" } }}
-                    className="relative"
-                  >
-                    {/* Glow behind mockup */}
-                    <div className={`absolute inset-4 rounded-3xl bg-gradient-to-br ${feature.accentGradient} blur-2xl`} />
-                    <div className="relative">
-                      <feature.Mockup />
-                    </div>
-                  </motion.div>
-                  {feature.interactive && <TapHintAnimation />}
-                </div>
-              </motion.div>
-            );
-          })}
-        </div>
       </div>
     </section>
   );
