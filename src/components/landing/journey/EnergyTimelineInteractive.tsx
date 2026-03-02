@@ -5,7 +5,6 @@ import { GripVertical, Sparkles } from "lucide-react";
 interface EnergyBlock {
   id: string;
   label: string;
-  emoji: string;
   startHour: number;
   endHour: number;
   color: string;
@@ -17,35 +16,20 @@ interface EnergyBlock {
 const START_HOUR = 7;
 const END_HOUR = 21;
 const VISIBLE_HOURS = END_HOUR - START_HOUR;
+const MIN_GAP = 0; // allow touching but no overlap
 
 const initialBlocks: EnergyBlock[] = [
-  { id: "wake", label: "Wake up", emoji: "🌅", startHour: 7, endHour: 8, color: "text-sunny", bg: "bg-sunny-light/60", borderColor: "border-sunny/30", activeRing: "ring-sunny/40" },
-  { id: "high1", label: "High energy", emoji: "⚡", startHour: 8, endHour: 10.5, color: "text-mint", bg: "bg-mint-light/60", borderColor: "border-mint/30", activeRing: "ring-mint/40" },
-  { id: "moderate1", label: "Moderate", emoji: "🚶", startHour: 10.5, endHour: 12, color: "text-sunny", bg: "bg-sunny-light/60", borderColor: "border-sunny/30", activeRing: "ring-sunny/40" },
-  { id: "lunch", label: "Lunch", emoji: "🍽️", startHour: 12, endHour: 13, color: "text-coral", bg: "bg-coral-light/60", borderColor: "border-coral/30", activeRing: "ring-coral/40" },
-  { id: "nap", label: "Nap time", emoji: "😴", startHour: 13, endHour: 15, color: "text-sky", bg: "bg-sky-light/60", borderColor: "border-sky/30", activeRing: "ring-sky/40" },
-  { id: "low", label: "Low energy", emoji: "🐢", startHour: 15, endHour: 17, color: "text-lavender", bg: "bg-lavender-light/60", borderColor: "border-lavender/30", activeRing: "ring-lavender/40" },
-  { id: "moderate2", label: "Moderate", emoji: "🎨", startHour: 17, endHour: 19, color: "text-sunny", bg: "bg-sunny-light/60", borderColor: "border-sunny/30", activeRing: "ring-sunny/40" },
-  { id: "wind", label: "Wind down", emoji: "🌙", startHour: 19, endHour: 21, color: "text-lavender", bg: "bg-lavender-light/60", borderColor: "border-lavender/30", activeRing: "ring-lavender/40" },
+  { id: "high1", label: "High energy", startHour: 7.5, endHour: 9.5, color: "text-mint", bg: "bg-mint-light/60", borderColor: "border-mint/30", activeRing: "ring-mint/40" },
+  { id: "moderate1", label: "Moderate", startHour: 10, endHour: 11.5, color: "text-sunny", bg: "bg-sunny-light/60", borderColor: "border-sunny/30", activeRing: "ring-sunny/40" },
+  { id: "nap", label: "Nap time", startHour: 13, endHour: 15, color: "text-sky", bg: "bg-sky-light/60", borderColor: "border-sky/30", activeRing: "ring-sky/40" },
+  { id: "low", label: "Low energy", startHour: 16, endHour: 17.5, color: "text-lavender", bg: "bg-lavender-light/60", borderColor: "border-lavender/30", activeRing: "ring-lavender/40" },
+  { id: "moderate2", label: "Moderate", startHour: 18.5, endHour: 20, color: "text-sunny", bg: "bg-sunny-light/60", borderColor: "border-sunny/30", activeRing: "ring-sunny/40" },
 ];
-
-const formatHour = (h: number) => {
-  const hour = Math.floor(h);
-  const min = h % 1 === 0.5 ? "30" : "00";
-  if (hour === 0 || hour === 24) return "12:00 AM";
-  if (hour < 12) return `${hour}:${min} AM`;
-  if (hour === 12) return `12:${min} PM`;
-  return `${hour - 12}:${min} PM`;
-};
 
 export const EnergyTimelineInteractive = () => {
   const [blocks, setBlocks] = useState(initialBlocks);
-  const [dragging, setDragging] = useState<{
-    id: string;
-    startX: number;
-    origStart: number;
-    origEnd: number;
-  } | null>(null);
+  const [draggingId, setDraggingId] = useState<string | null>(null);
+  const dragRef = useRef<{ id: string; startX: number; origStart: number } | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
   const getHourWidth = useCallback(() => {
@@ -53,43 +37,74 @@ export const EnergyTimelineInteractive = () => {
     return containerRef.current.clientWidth / VISIBLE_HOURS;
   }, []);
 
+  // Resolve overlaps by pushing neighbors away from the dragged block
+  const resolveOverlaps = useCallback((arr: EnergyBlock[], movedId: string): EnergyBlock[] => {
+    const sorted = [...arr].sort((a, b) => a.startHour - b.startHour);
+    const movedIdx = sorted.findIndex(b => b.id === movedId);
+    if (movedIdx === -1) return sorted;
+
+    // Push right neighbors
+    for (let i = movedIdx + 1; i < sorted.length; i++) {
+      const prev = sorted[i - 1];
+      const curr = sorted[i];
+      const minStart = prev.endHour + MIN_GAP;
+      if (curr.startHour < minStart) {
+        const duration = curr.endHour - curr.startHour;
+        const newStart = Math.min(minStart, END_HOUR - duration);
+        sorted[i] = { ...curr, startHour: newStart, endHour: newStart + duration };
+      }
+    }
+
+    // Push left neighbors
+    for (let i = movedIdx - 1; i >= 0; i--) {
+      const next = sorted[i + 1];
+      const curr = sorted[i];
+      const duration = curr.endHour - curr.startHour;
+      const maxEnd = next.startHour - MIN_GAP;
+      if (curr.endHour > maxEnd) {
+        const newEnd = Math.max(maxEnd, START_HOUR + duration);
+        sorted[i] = { ...curr, startHour: newEnd - duration, endHour: newEnd };
+      }
+    }
+
+    return sorted;
+  }, []);
+
   const handlePointerDown = useCallback(
     (e: React.PointerEvent, block: EnergyBlock) => {
       e.preventDefault();
       e.stopPropagation();
       (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
-      setDragging({
-        id: block.id,
-        startX: e.clientX,
-        origStart: block.startHour,
-        origEnd: block.endHour,
-      });
+      dragRef.current = { id: block.id, startX: e.clientX, origStart: block.startHour };
+      setDraggingId(block.id);
     },
     []
   );
 
   const handlePointerMove = useCallback(
     (e: React.PointerEvent) => {
-      if (!dragging) return;
+      const drag = dragRef.current;
+      if (!drag) return;
       const hourWidth = getHourWidth();
-      const dx = e.clientX - dragging.startX;
+      const dx = e.clientX - drag.startX;
       const dHours = dx / hourWidth;
-      const duration = dragging.origEnd - dragging.origStart;
-      let newStart = Math.round((dragging.origStart + dHours) * 2) / 2;
+      const block = blocks.find(b => b.id === drag.id);
+      if (!block) return;
+      const duration = block.endHour - block.startHour;
+      let newStart = Math.round((drag.origStart + dHours) * 2) / 2;
       newStart = Math.max(START_HOUR, Math.min(END_HOUR - duration, newStart));
-      setBlocks((prev) =>
-        prev.map((b) =>
-          b.id === dragging.id
-            ? { ...b, startHour: newStart, endHour: newStart + duration }
-            : b
-        )
+
+      const updated = blocks.map(b =>
+        b.id === drag.id ? { ...b, startHour: newStart, endHour: newStart + duration } : b
       );
+      setBlocks(resolveOverlaps(updated, drag.id));
     },
-    [dragging, getHourWidth]
+    [blocks, getHourWidth, resolveOverlaps]
   );
 
   const handlePointerUp = useCallback(() => {
-    setDragging(null);
+    dragRef.current = null;
+    setDraggingId(null);
   }, []);
 
   const hours = Array.from({ length: VISIBLE_HOURS + 1 }, (_, i) => START_HOUR + i);
@@ -140,7 +155,7 @@ export const EnergyTimelineInteractive = () => {
           {/* Draggable area */}
           <div
             className="relative rounded-2xl border border-border bg-muted/20 overflow-hidden"
-            style={{ height: 72 }}
+            style={{ height: 64 }}
             onPointerMove={handlePointerMove}
             onPointerUp={handlePointerUp}
           >
@@ -149,41 +164,28 @@ export const EnergyTimelineInteractive = () => {
               <div
                 key={h}
                 className="absolute top-0 bottom-0 border-l border-border/30"
-                style={{
-                  left: `${(i / VISIBLE_HOURS) * 100}%`,
-                }}
+                style={{ left: `${(i / VISIBLE_HOURS) * 100}%` }}
               />
             ))}
 
             {/* Blocks */}
             {blocks.map((block) => {
-              const leftPct =
-                ((block.startHour - START_HOUR) / VISIBLE_HOURS) * 100;
-              const widthPct =
-                ((block.endHour - block.startHour) / VISIBLE_HOURS) * 100;
-              const isDragging = dragging?.id === block.id;
+              const leftPct = ((block.startHour - START_HOUR) / VISIBLE_HOURS) * 100;
+              const widthPct = ((block.endHour - block.startHour) / VISIBLE_HOURS) * 100;
+              const isDragging = draggingId === block.id;
               return (
                 <motion.div
                   key={block.id}
-                  className={`absolute top-2 bottom-2 rounded-xl ${block.bg} border ${block.borderColor} flex items-center justify-center gap-1.5 cursor-grab active:cursor-grabbing transition-shadow select-none touch-none ${isDragging ? `ring-2 ${block.activeRing} shadow-lifted z-20` : "z-10 hover:shadow-soft"}`}
-                  style={{
-                    left: `${leftPct}%`,
-                    width: `${widthPct}%`,
-                  }}
+                  className={`absolute top-2 bottom-2 rounded-xl ${block.bg} border ${block.borderColor} flex items-center justify-center gap-1 cursor-grab active:cursor-grabbing select-none touch-none transition-shadow ${isDragging ? `ring-2 ${block.activeRing} shadow-lifted z-20` : "z-10 hover:shadow-soft"}`}
+                  style={{ left: `${leftPct}%`, width: `${widthPct}%` }}
                   onPointerDown={(e) => handlePointerDown(e, block)}
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                 >
-                  <GripVertical className="h-3.5 w-3.5 text-muted-foreground/40 shrink-0 hidden sm:block" />
-                  <span className="text-base sm:text-lg leading-none">{block.emoji}</span>
-                  <div className="hidden sm:block min-w-0">
-                    <span className={`text-xs font-bold ${block.color} block truncate`}>
-                      {block.label}
-                    </span>
-                    <span className="text-[10px] text-muted-foreground block">
-                      {formatHour(block.startHour)}–{formatHour(block.endHour)}
-                    </span>
-                  </div>
+                  <GripVertical className="h-3 w-3 text-muted-foreground/40 shrink-0" />
+                  <span className={`text-xs font-bold ${block.color} truncate`}>
+                    {block.label}
+                  </span>
                 </motion.div>
               );
             })}
@@ -192,11 +194,10 @@ export const EnergyTimelineInteractive = () => {
           {/* Legend */}
           <div className="flex flex-wrap gap-2 mt-3 justify-center">
             {[
-              { emoji: "⚡", label: "High energy", dot: "bg-mint" },
-              { emoji: "🚶", label: "Moderate", dot: "bg-sunny" },
-              { emoji: "🐢", label: "Low energy", dot: "bg-lavender" },
-              { emoji: "😴", label: "Nap", dot: "bg-sky" },
-              { emoji: "🍽️", label: "Meal", dot: "bg-coral" },
+              { label: "High energy", dot: "bg-mint" },
+              { label: "Moderate", dot: "bg-sunny" },
+              { label: "Low energy", dot: "bg-lavender" },
+              { label: "Nap", dot: "bg-sky" },
             ].map((item) => (
               <div
                 key={item.label}
@@ -204,7 +205,7 @@ export const EnergyTimelineInteractive = () => {
               >
                 <div className={`h-2 w-2 rounded-full ${item.dot}`} />
                 <span className="text-[10px] font-medium text-foreground">
-                  {item.emoji} {item.label}
+                  {item.label}
                 </span>
               </div>
             ))}
