@@ -145,25 +145,12 @@ export const FeaturesShowcase = () => {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mx-auto mb-16 max-w-2xl text-center"
+          className="mx-auto mb-16 max-w-3xl text-center"
         >
-          <motion.div
-            initial={{ scale: 0.9, opacity: 0 }}
-            whileInView={{ scale: 1, opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
-            className="mb-5 inline-flex items-center gap-2 rounded-full border border-border bg-card px-5 py-2.5 shadow-soft"
-          >
-            <div className="h-1.5 w-1.5 rounded-full bg-coral animate-[pulse_2s_ease-in-out_infinite]" />
-            <span className="font-body font-semibold text-foreground text-sm tracking-wide">Sound Familiar?</span>
-          </motion.div>
-          <h2 className="mb-5 font-body text-4xl font-bold text-foreground md:text-5xl leading-tight">
-            Family trips shouldn't feel like{" "}
-            <span className="text-gradient-coral">a second job</span>
+          <h2 className="font-body text-4xl font-bold text-foreground md:text-5xl lg:text-6xl leading-tight">
+            Planning with kids is{" "}
+            <span className="text-gradient-coral">overwhelming</span>
           </h2>
-          <p className="font-body text-lg text-muted-foreground leading-relaxed">
-            If any of these hit close to home, you're not alone.
-          </p>
         </motion.div>
 
         {/* Pain point cards */}
