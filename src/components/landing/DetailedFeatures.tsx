@@ -52,16 +52,29 @@ export const DetailedFeatures = () => {
   return (
     <section className="bg-background py-20 lg:py-28">
       <div className="container mx-auto px-4">
+        {/* Gradient header – same style as JourneyShowcase */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mx-auto mb-16 max-w-5xl"
+          className="mx-auto mb-16 max-w-3xl rounded-3xl bg-gradient-to-br from-coral via-sunny to-mint px-6 py-12 text-center shadow-lifted md:px-12 md:py-16"
         >
-          <h2 className="font-body text-2xl font-bold text-foreground md:text-3xl leading-tight">
-            Everything you need,{" "}
-            <span className="text-gradient-coral">in one place</span>
+          <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-card/20 backdrop-blur-sm px-4 py-2">
+            <span className="text-lg">🧩</span>
+            <span className="font-body font-semibold text-card">Features</span>
+          </div>
+          <h2 className="mb-4 font-handwriting text-4xl leading-tight text-card md:text-5xl">
+            Everything You Need,{" "}
+            <span className="relative">
+              In One Place
+              <svg className="absolute -bottom-2 left-0 w-full" viewBox="0 0 200 12" fill="none">
+                <path d="M2 8C50 2 100 2 198 8" stroke="currentColor" strokeWidth="3" strokeLinecap="round" className="text-card/50" />
+              </svg>
+            </span>
           </h2>
+          <p className="font-body text-lg text-card/90">
+            Discover, plan, adjust, and pack — all tailored to your family.
+          </p>
         </motion.div>
 
         <div className="mx-auto max-w-5xl space-y-20 lg:space-y-28">
