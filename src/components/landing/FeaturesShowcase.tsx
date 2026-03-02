@@ -40,15 +40,13 @@ const painPoints: PainPoint[] = [
     ],
   },
   {
-    title: "0% Toddler Battery",
+    title: "The Toddler Boss",
     highlights: [
-      { text: "Watching a meticulously planned ", isNumber: false },
-      { text: "12-hour", isNumber: true },
-      { text: " itinerary collapse in ", isNumber: false },
-      { text: "1 minute", isNumber: true },
-      { text: " because your kid's battery suddenly hit ", isNumber: false },
-      { text: "zero", isNumber: true },
-      { text: ".", isNumber: false },
+      { text: "Trying to visit ", isNumber: false },
+      { text: "3", isNumber: true },
+      { text: " must-see spots, only to realize your whole day is dictated by ", isNumber: false },
+      { text: "1", isNumber: true },
+      { text: " toddler's unpredictable energy levels and sudden obsessions.", isNumber: false },
     ],
   },
   {
