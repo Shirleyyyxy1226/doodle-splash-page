@@ -147,7 +147,7 @@ export const FeaturesShowcase = () => {
           viewport={{ once: true }}
           className="mx-auto mb-16 max-w-3xl text-center"
         >
-          <h2 className="font-body text-4xl font-bold text-foreground md:text-5xl lg:text-6xl leading-tight">
+          <h2 className="font-body text-2xl font-bold text-foreground md:text-3xl leading-tight">
             Planning with kids is{" "}
             <span className="text-gradient-coral">overwhelming</span>
           </h2>
