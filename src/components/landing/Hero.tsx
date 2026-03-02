@@ -1,59 +1,87 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { Sparkles, ArrowDown } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Sparkles, ArrowDown, Mail } from "lucide-react";
 import heroBg from "@/assets/hero-bg.svg";
 
-const HeroContent = () => (
-  <>
-    <div className="container relative z-10 mx-auto flex flex-1 flex-col items-center justify-center px-4 text-center pt-20">
-      <motion.h1
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.7, delay: 0.2 }}
-        className="mb-6 font-body text-3xl font-bold leading-[2] md:text-5xl lg:text-6xl text-foreground [transform:scaleY(0.6)]"
-      >
-        Travel with Kids,
-        <br />
-        <span className="text-gradient-coral">Without the Mental Load.</span>
-      </motion.h1>
+const HeroContent = () => {
+  const [email, setEmail] = useState("");
 
+  return (
+    <>
+      <div className="container relative z-10 mx-auto flex flex-1 flex-col items-center justify-center px-4 text-center pt-20">
+        <motion.h1
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.2 }}
+          className="mb-6 font-body text-3xl font-bold leading-[2] md:text-5xl lg:text-6xl text-foreground [transform:scaleY(0.6)]"
+        >
+          Travel with Kids,
+          <br />
+          <span className="text-gradient-coral">Without the Mental Load.</span>
+        </motion.h1>
 
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.5 }}
+          className="flex flex-wrap items-center justify-center gap-4"
+        >
+          <a href="https://kiddogo.co.uk/" target="_blank" rel="noopener noreferrer">
+            <Button size="lg" className="rounded-full border-2 border-primary-foreground/30 bg-primary font-body text-base hover:bg-coral/90 px-8">
+              <Sparkles className="mr-2 h-5 w-5" />
+              Try Our App
+            </Button>
+          </a>
+          <Button
+            size="lg"
+            variant="outline"
+            className="rounded-full border-2 border-foreground/20 font-body text-base hover:bg-muted px-8"
+            onClick={() => document.getElementById("journey")?.scrollIntoView({ behavior: "smooth" })}
+          >
+            See How It Works
+            <ArrowDown className="ml-2 h-4 w-4" />
+          </Button>
+        </motion.div>
 
+        {/* Subscription */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.7 }}
+          className="mt-10 flex w-full max-w-md items-center gap-2"
+        >
+          <div className="relative flex-1">
+            <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+            <Input
+              type="email"
+              placeholder="name@email.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="rounded-full bg-card/80 backdrop-blur-sm pl-10 pr-4 h-12 border-border font-body text-sm"
+            />
+          </div>
+          <Button
+            size="lg"
+            className="rounded-full bg-primary font-body text-sm hover:bg-coral/90 h-12 px-6 shrink-0"
+          >
+            Subscribe
+          </Button>
+        </motion.div>
+      </div>
 
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.5 }}
-        className="flex flex-wrap items-center justify-center gap-4"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1 }}
+        className="relative z-10 pb-8 text-center"
       >
-        <a href="https://kiddogo.co.uk/" target="_blank" rel="noopener noreferrer">
-          <Button size="lg" className="rounded-full border-2 border-primary-foreground/30 bg-primary font-display text-base hover:bg-coral/90 px-8">
-            <Sparkles className="mr-2 h-5 w-5" />
-            Try Our App
-          </Button>
-        </a>
-        <Button
-          size="lg"
-          variant="outline"
-          className="rounded-full border-2 border-foreground/20 font-display text-base hover:bg-muted px-8"
-          onClick={() => document.getElementById("journey")?.scrollIntoView({ behavior: "smooth" })}
-        >
-          See How It Works
-          <ArrowDown className="ml-2 h-4 w-4" />
-        </Button>
+        <ArrowDown className="mx-auto h-5 w-5 text-muted-foreground animate-bounce" />
       </motion.div>
-    </div>
-
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ delay: 1 }}
-      className="relative z-10 pb-8 text-center"
-    >
-      <ArrowDown className="mx-auto h-5 w-5 text-muted-foreground animate-bounce" />
-    </motion.div>
-  </>
-);
+    </>
+  );
+};
 
 const HeroSection = ({ bgImage, bgStyle }: { bgImage: string; bgStyle?: React.CSSProperties }) => (
   <section

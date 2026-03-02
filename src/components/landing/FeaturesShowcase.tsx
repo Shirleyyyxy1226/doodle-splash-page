@@ -5,7 +5,7 @@ import { HotelOptionsMockup } from "./journey/HotelOptionsMockup";
 import { TipsMockup } from "./journey/TipsMockup";
 import { QuickAdjustmentsMockup } from "./journey/QuickAdjustmentsMockup";
 import { PackingListMockup } from "./journey/PackingListMockup";
-import { MapPin, Hotel, Lightbulb, Settings, Luggage, Hand } from "lucide-react";
+import { MapPin, Hotel, Lightbulb, Settings, Luggage, Hand, MousePointerClick } from "lucide-react";
 
 interface Feature {
   icon: typeof MapPin;
@@ -16,6 +16,7 @@ interface Feature {
   title: string;
   description: string;
   Mockup: React.ComponentType;
+  interactive?: boolean;
 }
 
 const features: Feature[] = [
@@ -62,6 +63,7 @@ const features: Feature[] = [
     description:
       "Too much walking? Need more rest? Tap once and the entire plan reshuffles — always with more options to explore.",
     Mockup: QuickAdjustmentsMockup,
+    interactive: true,
   },
   {
     icon: Luggage,
@@ -73,6 +75,7 @@ const features: Feature[] = [
     description:
       "Weather-aware packing lists customized for your destination, with kid essentials sorted by category.",
     Mockup: PackingListMockup,
+    interactive: true,
   },
 ];
 
@@ -89,11 +92,29 @@ const DragHintAnimation = () => (
       className="flex items-center gap-1 rounded-full border border-border bg-card px-3 py-1.5 shadow-soft"
     >
       <Hand className="h-3.5 w-3.5 text-coral" />
-      <span className="text-xs font-medium">Drag to try</span>
+      <span className="text-xs font-medium font-body">Drag to try</span>
     </motion.div>
   </motion.div>
 );
 
+const TapHintAnimation = () => (
+  <motion.div
+    className="flex items-center gap-2 text-muted-foreground mt-3"
+    initial={{ opacity: 0 }}
+    whileInView={{ opacity: 1 }}
+    viewport={{ once: true }}
+    transition={{ delay: 0.5 }}
+  >
+    <motion.div
+      animate={{ scale: [1, 1.08, 1] }}
+      transition={{ duration: 1.8, repeat: Infinity, repeatDelay: 1, ease: "easeInOut" }}
+      className="flex items-center gap-1 rounded-full border border-border bg-card px-3 py-1.5 shadow-soft"
+    >
+      <MousePointerClick className="h-3.5 w-3.5 text-mint" />
+      <span className="text-xs font-medium font-body">Tap to try</span>
+    </motion.div>
+  </motion.div>
+);
 export const FeaturesShowcase = () => {
   return (
     <section id="features" className="relative bg-background py-24 lg:py-32 overflow-visible">
@@ -120,9 +141,9 @@ export const FeaturesShowcase = () => {
             className="mb-5 inline-flex items-center gap-2 rounded-full border border-border bg-card px-5 py-2.5 shadow-soft"
           >
             <div className="h-1.5 w-1.5 rounded-full bg-coral animate-[pulse_2s_ease-in-out_infinite]" />
-            <span className="font-display font-semibold text-foreground text-sm tracking-wide">Features</span>
+            <span className="font-body font-semibold text-foreground text-sm tracking-wide">Features</span>
           </motion.div>
-          <h2 className="mb-5 font-display text-4xl font-bold text-foreground md:text-5xl leading-tight">
+          <h2 className="mb-5 font-body text-4xl font-bold text-foreground md:text-5xl leading-tight">
             Everything you need,{" "}
             <span className="text-gradient-coral">built for kids</span>
           </h2>
@@ -146,11 +167,11 @@ export const FeaturesShowcase = () => {
             <div className="flex flex-col md:flex-row md:items-start gap-6 mb-8">
               <div className="flex-1">
                 <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-coral-light px-3 py-1.5">
-                  <span className="text-xs font-bold text-coral uppercase tracking-wider font-display">
+                  <span className="text-xs font-bold text-coral uppercase tracking-wider font-body">
                     Personalize
                   </span>
                 </div>
-                <h3 className="mb-2 font-display text-2xl font-bold text-foreground md:text-3xl">
+                <h3 className="mb-2 font-body text-2xl font-bold text-foreground md:text-3xl">
                   Customize your child's rhythm
                 </h3>
                 <p className="font-body text-muted-foreground leading-relaxed max-w-lg">
@@ -185,11 +206,11 @@ export const FeaturesShowcase = () => {
                 <div className="flex-1 text-center lg:text-left">
                   <div className={`mb-4 inline-flex items-center gap-2.5 rounded-full ${feature.tagBg} px-4 py-2`}>
                     <Icon className={`h-4 w-4 ${feature.tagColor}`} />
-                    <span className={`text-xs font-bold ${feature.tagColor} uppercase tracking-wider font-display`}>
+                    <span className={`text-xs font-bold ${feature.tagColor} uppercase tracking-wider font-body`}>
                       {feature.tag}
                     </span>
                   </div>
-                  <h3 className="mb-4 font-display text-2xl font-bold text-foreground md:text-3xl leading-tight">
+                  <h3 className="mb-4 font-body text-2xl font-bold text-foreground md:text-3xl leading-tight">
                     {feature.title}
                   </h3>
                   <p className="font-body text-base text-muted-foreground leading-relaxed max-w-md mx-auto lg:mx-0">
@@ -209,6 +230,7 @@ export const FeaturesShowcase = () => {
                       <feature.Mockup />
                     </div>
                   </motion.div>
+                  {feature.interactive && <TapHintAnimation />}
                 </div>
               </motion.div>
             );
